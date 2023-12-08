@@ -12,3 +12,17 @@
 /Users/umutaydin/C#/MonopolyProject/MonopolyProject/obj/Debug/net7.0/MonopolyProject.pdb
 /Users/umutaydin/C#/MonopolyProject/MonopolyProject/obj/Debug/net7.0/MonopolyProject.genruntimeconfig.cache
 /Users/umutaydin/C#/MonopolyProject/MonopolyProject/obj/Debug/net7.0/ref/MonopolyProject.dll
+/Users/pelintunc/MonopolyProject/MonopolyProject/MonopolyProject/bin/Debug/net7.0/MonopolyProject
+/Users/pelintunc/MonopolyProject/MonopolyProject/MonopolyProject/bin/Debug/net7.0/MonopolyProject.deps.json
+/Users/pelintunc/MonopolyProject/MonopolyProject/MonopolyProject/bin/Debug/net7.0/MonopolyProject.runtimeconfig.json
+/Users/pelintunc/MonopolyProject/MonopolyProject/MonopolyProject/bin/Debug/net7.0/MonopolyProject.dll
+/Users/pelintunc/MonopolyProject/MonopolyProject/MonopolyProject/bin/Debug/net7.0/MonopolyProject.pdb
+/Users/pelintunc/MonopolyProject/MonopolyProject/MonopolyProject/obj/Debug/net7.0/MonopolyProject.GeneratedMSBuildEditorConfig.editorconfig
+/Users/pelintunc/MonopolyProject/MonopolyProject/MonopolyProject/obj/Debug/net7.0/MonopolyProject.AssemblyInfoInputs.cache
+/Users/pelintunc/MonopolyProject/MonopolyProject/MonopolyProject/obj/Debug/net7.0/MonopolyProject.AssemblyInfo.cs
+/Users/pelintunc/MonopolyProject/MonopolyProject/MonopolyProject/obj/Debug/net7.0/MonopolyProject.csproj.CoreCompileInputs.cache
+/Users/pelintunc/MonopolyProject/MonopolyProject/MonopolyProject/obj/Debug/net7.0/MonopolyProject.dll
+/Users/pelintunc/MonopolyProject/MonopolyProject/MonopolyProject/obj/Debug/net7.0/refint/MonopolyProject.dll
+/Users/pelintunc/MonopolyProject/MonopolyProject/MonopolyProject/obj/Debug/net7.0/MonopolyProject.pdb
+/Users/pelintunc/MonopolyProject/MonopolyProject/MonopolyProject/obj/Debug/net7.0/MonopolyProject.genruntimeconfig.cache
+/Users/pelintunc/MonopolyProject/MonopolyProject/MonopolyProject/obj/Debug/net7.0/ref/MonopolyProject.dll
