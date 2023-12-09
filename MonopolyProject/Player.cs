@@ -10,6 +10,8 @@ public class Player {
 
     public Tile currentTile{get; private set;}
 
+    public List<Tile> playerCardList{get; private set;}
+
 
     public Player (string name){
         Name=name;
@@ -52,6 +54,7 @@ public int RollDice()
     int steps = RollDice();
     Position = (Position + steps) % board.Size;
     Console.WriteLine($"{Name} rolled a {steps} and moved to position {Position} on the board.");
+
     currentTile = board.tiles[Position]; 
     Console.WriteLine($"{Name} is here:   \n "+currentTile.ToString());
 
@@ -76,10 +79,12 @@ public int RollDice()
     public void GoToJail(){
 
     }
-    public void PayToOtherPlayer(List<Player> players)
+    public void PayToOtherPlayer(Player player,int amount)
     {
-        Console.WriteLine($"{Name}, başka bir oyuncuya para verdi!");
-        // Başka oyuncuya para verme işlemleri buraya eklenebilir.
+        Console.WriteLine($"{Name}, {player.Name}  oyuncusuna para verdi!");
+        Money = Money - amount;
+        player.Money = player.Money + amount; // Methodlarla da yapulabilir 
+        
     }
 
     public void EarnMoney(int amount)
@@ -92,4 +97,17 @@ public int RollDice()
     {
         Money= Money-i;
     }
+    public int getUtilityCardCount(){  // Maksimum 2 kartı olabilir zaten ama aklıma efektif çözüm gelmedi 
+        int counter = 0;
+        for (int i = 0 ; i < playerCardList.Count; i++){
+            if(playerCardList[i]is UtilityTile utilityTile){
+                counter++;
+
+            }
+        }
+        return counter;
+    }
+
+
+
 }
