@@ -1,12 +1,13 @@
 using System.Drawing;
 
-class Property: ITile{
+public class Property: Tile{
 
     public int id;
     private string name;
     private int price;
     private Player owner;
     private Color color;
+    
 
     // Getter method for 'name' attribute
     public string GetName()
@@ -60,20 +61,22 @@ class Property: ITile{
         return owner != null;
 
     }
+
+    public int GetId()
+    {
+        return id;
+    }
     
 
-    public void LandOn(Player player)
+    public override void LandOn(Player player)
     {
         // renklere göre implement edilecek
         throw new NotImplementedException();
     }
 
-    public Property(){
-
-    }
-    public Property(int id, string name, int price, Player owner, Color color){
-        this.id = id;
-        this.name = name;
+    public Property(int id, string name, string description, int price, Player owner, Color color)
+        : base(id, name, description)
+    {
         this.price = price;
         this.owner = owner;
         this.color = color;
@@ -81,21 +84,17 @@ class Property: ITile{
 
     public override string ToString()
     {
-        string horizontalLine = new string('-', 30); // Yatay çizgi
-        string verticalLine = "|"; // Dikey çizgi
+        string horizontalLine = new string('-', 30); 
+        string verticalLine = "|"; 
 
     
+string result = base.ToString(); // Use the common part from the base class
 
-        // Biçimlendirilmiş metni oluştur
-        string result = $"+{horizontalLine}+\n" +
-                        $"{verticalLine,2} Name: {name, 15}{verticalLine, 5}\n" +
-                        $"{verticalLine}{horizontalLine}{verticalLine, 5}\n" +
-                        $"{verticalLine,2} Price: {price, 13}{verticalLine, 5}\n" +
-                        $"{verticalLine,2} Owner: {(owner != null ? owner.ToString() : "None"), 11}{verticalLine, 5}\n" +
-                        $"{verticalLine,2} Color: {color, 12}{verticalLine, 5}\n" +
-                        $"{verticalLine}{horizontalLine}{verticalLine, 5}";
-
-        // Orijinal konsol rengini geri yükle
+        // Add property-specific details if needed
+        result += $"\n{verticalLine,2} Price: {price, 13}{verticalLine, 5}\n" +
+                  $"{verticalLine,2} Owner: {(owner != null ? owner.ToString() : "None"), 11}{verticalLine, 5}\n" +
+                  $"{verticalLine,2} Color: {color, 12}{verticalLine, 5}\n" +
+                  $"{verticalLine}{horizontalLine}{verticalLine, 5}";
 
 
         return result;

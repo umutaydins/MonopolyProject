@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 
 
-class Player {
+public class Player {
     public string Name {get;}
     public int Money {get; private set;}
 
     public int Position{get; private set;}
+
+    public Tile currentTile{get; private set;}
 
 
     public Player (string name){
@@ -44,11 +46,14 @@ public int RollDice()
 
 
 
- public void Move(Board board)
+ public void Move(Board board) 
 {
+
     int steps = RollDice();
     Position = (Position + steps) % board.Size;
     Console.WriteLine($"{Name} rolled a {steps} and moved to position {Position} on the board.");
+    currentTile = board.tiles[Position]; 
+    Console.WriteLine($"{Name} is here:   \n "+currentTile.ToString());
 
     // Hareket ettikten sonra tahtanın boyutunu kontrol et
     if (Position >= board.Size)
@@ -83,5 +88,8 @@ public int RollDice()
         Console.WriteLine($"{Name} earned {amount} money. Total money: {Money}");
     }
 
-
+    public void deductMoney(int i)
+    {
+        Money= Money-i;
+    }
 }
