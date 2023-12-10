@@ -13,17 +13,15 @@ class MonopolyProject
         int playerCount = int.Parse(Console.ReadLine());
         // Create player list
         List<Player> players = new List<Player>();
+        Board.Instance.InitializeBoard();
 
         for (int i = 1; i <= playerCount; i++)
         {
             Console.Write($"Enter name of player: ");
             string playerName = Console.ReadLine();
-            Player player = new Player(playerName);
+            Player player = new Player(playerName,Board.Instance);
             players.Add(player);
         }
-Console.WriteLine("kkkkkkkkk");
-        // Oyun tahtasını oluştur
-        Board.Instance.InitializeBoard();
 
         while (players.Count > 1)
         {

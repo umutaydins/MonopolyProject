@@ -1,47 +1,32 @@
 using System;
 using System.Drawing;
-public class TrainStation : Tile
+public class TrainStation : Tile, IOwnable
 {
-    private int rent;
-    private Player ownedBy;
-    private int stationsOwned;
+    public int Rent { get; set; }
+    public int Price { get; set; }
+    public Player Owner { get; set; }
+    public int StationsOwned { get; set; }
 
-    public TrainStation(int id, string name, string description, int rent)
+    public TrainStation(int id, string name, string description, int price)
         : base(id, name, description)
     {
-        this.rent = rent;
-        this.ownedBy = null;
-        this.stationsOwned = 0;
-    }
-
-    public int Rent
-    {
-        get { return rent; }
-    }
-
-    public Player OwnedBy
-    {
-        get { return ownedBy; }
-        set { ownedBy = value; }
-    }
-
-    public int StationsOwned
-    {
-        get { return stationsOwned; }
+        this.Price = price;
+        this.Owner = null;
+        this.StationsOwned = 0;
     }
 
     public void IncrementStationsOwned()
     {
-        stationsOwned++;
+        StationsOwned++;
     }
 
     public override void LandOn(Player player)
     {
         Console.WriteLine($"Player {player.Name} landed on the Train Station tile.");
-        if (ownedBy != null)
+        if (Owner != null)
         {
             int totalRent = CalculateRent();
-            Console.WriteLine($"Player {player.Name} pays ${totalRent} rent to {ownedBy.Name}.");
+            Console.WriteLine($"Player {player.Name} pays ${totalRent} rent to {Owner.Name}.");
             // Implement logic to transfer money from player to ownedBy
         }
         else
@@ -51,13 +36,21 @@ public class TrainStation : Tile
         }
     }
 
+    public bool IsOwned() { return Owner != null; }
+
     private int CalculateRent()
     {
-        
-        return rent * (int)Math.Pow(2, stationsOwned - 1); // sonradan düzenlenecek
+
+        return Rent * (int)Math.Pow(2, StationsOwned - 1); // sonradan düzenlenecek
     }
     public override string ToString()
     {
         return base.ToString();
+    }
+
+    public void Purchase(Player buyer)
+    {
+        TileOwnershipManager ownershipManager = new TileOwnershipManager();
+        ownershipManager.PurchaseTile(this, buyer);
     }
 }

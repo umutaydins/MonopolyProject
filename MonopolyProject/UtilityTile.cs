@@ -3,49 +3,29 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Security.Cryptography.X509Certificates;
 
-public class UtilityTile : Tile
+public class UtilityTile : Tile,IOwnable
 {
 
-    private int price;
-    private int charge;
-    private Player owner;
+    
+    public int Charge { get; private set; }
+    
+    public int Price { get; private set; }
 
+    public Player Owner { get; set; }
 
-    public UtilityTile(int id, string name, string description)
+    
+
+    public UtilityTile(int id, string name, string description, int price)
         : base(id, name, description)
     {
-        
+        Price = price;
+        this.Owner = null;
     }
 
-    public int GetPrice()
-    {
-        return price;
-    }
 
-    public void SetPrice(int newPrice)
-    {
-        price = newPrice;
-    }
+    public bool IsOwned() {return Owner != null;}
 
-    public int GetCharge()
-    {
-        return charge;
-    }
 
-    public void SetCharge(int newCharge)
-    {
-        charge = newCharge;
-    }
-
-    public Player GetOwner()
-    {
-        return owner;
-    }
-
-    public void SetOwner(Player newOwner)
-    {
-        owner = newOwner;
-    }
     
 
     
@@ -53,18 +33,18 @@ public class UtilityTile : Tile
     public override void LandOn(Player player)
 
     {
-      if (GetOwner() != null){
+      if (Owner != null){
         int dice = player.RollDice();
-        if (owner.getUtilityCardCount()==1){
+        if (Owner.getUtilityCardCount()==1){
 
             
-            Console.WriteLine($"{player.Name} rolled a {dice}. {player.Name} will pay {dice*5} to {owner.Name}");
-            player.PayToOtherPlayer(owner,dice*5);
+            Console.WriteLine($"{player.Name} rolled a {dice}. {player.Name} will pay {dice*5} to {Owner.Name}");
+            player.PayToOtherPlayer(Owner,dice*5);
             
         }
-        else if (owner.getUtilityCardCount()==2){
-            Console.WriteLine($"{player.Name} rolled a {dice}. {player.Name} will pay {dice*10} to {owner.Name}");
-            player.PayToOtherPlayer(owner,dice*10);
+        else if (Owner.getUtilityCardCount()==2){
+            Console.WriteLine($"{player.Name} rolled a {dice}. {player.Name} will pay {dice*10} to {Owner.Name}");
+            player.PayToOtherPlayer(Owner,dice*10);
 
         }
 
@@ -81,5 +61,11 @@ public class UtilityTile : Tile
     public override string ToString()
     {
         return base.ToString();
+    }
+
+    public void Purchase(Player buyer)
+    {
+        TileOwnershipManager ownershipManager = new TileOwnershipManager();
+        ownershipManager.PurchaseTile(this, buyer);
     }
 }

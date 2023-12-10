@@ -11,7 +11,7 @@ public abstract class Tile
         return Name;
     }
 
-    // Setter method for 'name' attribute
+    
     
 
     protected Tile(int id, string name, string description)

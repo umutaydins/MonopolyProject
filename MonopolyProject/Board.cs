@@ -33,13 +33,13 @@ public class Board
 
 
     // Define the list of tiles
-    Tile deneme1 = new UtilityTile(0, "Baslangıc", "Description"); // Baslangıc tile'ı yapılacak
+    Tile deneme1 = new UtilityTile(0, "Baslangıc", "Description",50); // Baslangıc tile'ı yapılacak
     Tile kasimpasa = new Property(1, "kasimpasa", "Description", 60, null, Color.Brown);
     Tile communityChestCardTile = new CommunityChestCardTile(2, "Community Chest Card", "Description");
     Tile dolapdere = new Property(3, "dolapdere", "description", 60, null, Color.Brown);
     Tile incomeTaxTile = new TaxAndParkingTile(4, "Income Tax Tile", "Description", 200);
 
-    Tile haydarPasaStation = new TrainStation(5, "Haydarpasa Istasyonu", "Description", 50);// simdilik 50 yazdım kullanıcının istasyon sayısına göre ayaralanacak
+    Tile haydarPasaStation = new TrainStation(5, "Haydarpasa Istasyonu", "Description",50);// simdilik 50 yazdım kullanıcının istasyon sayısına göre ayaralanacak
 
     Tile sultanahmet = new Property(6, "sultanahmet", "description", 60, null, Color.Blue);
     Tile chanceCardTile = new ChanceCardTile(7, "deneme", "Description");
@@ -48,7 +48,7 @@ public class Board
     Tile sirkeci = new Property(9, "sirkeci", "description", 60, null, Color.Blue);
     Tile deneme2 = new Property(10, "deneme2", "Description", 60, null, Color.Brown);
     Tile beyoglu = new Property(11, "beyoglu", "description", 60, null, Color.Pink);
-    Tile electricCompany = new UtilityTile(12, "Electric Company", "Description");
+    Tile electricCompany = new UtilityTile(12, "Electric Company", "Description",50);
     Tile taksim = new Property(13, "taksim", "description", 60, null, Color.Pink);
     Tile besiktas = new Property(14, "besiktas", "description", 60, null, Color.Pink);
     Tile bPasaStation = new TrainStation(5, "b Istasyonu", "Description", 50);
@@ -63,7 +63,7 @@ public class Board
     Tile aStation = new TrainStation(25, "a Istasyonu", "Description", 50);
     Tile nisantasi = new Property(26, "nisantasi", "description", 60, null, Color.Yellow);
     Tile macka = new Property(27, "macka", "description", 60, null, Color.Yellow);
-    Tile waterWorks = new UtilityTile(28, " Water Works", "Description");
+    Tile waterWorks = new UtilityTile(28, " Water Works", "Description",50);
     Tile tesvikiye = new Property(29, "tesvikiye", "description", 60, null, Color.Yellow);
     Tile levent = new Property(31, "levent", "description", 60, null, Color.Green);
     Tile etiler = new Property(32, "etiler", "description", 60, null, Color.Green);

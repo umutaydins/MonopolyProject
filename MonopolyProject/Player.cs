@@ -2,89 +2,175 @@ using System;
 using System.Collections.Generic;
 
 
-public class Player {
-    public string Name {get;}
-    public int Money {get; private set;}
-
-    public int Position{get; private set;}
-
-    public Tile currentTile{get; private set;}
-
-    public List<Tile> playerCardList{get; private set;}
-
-
-    public Player (string name){
-        Name=name;
-        Money=200;
-        Position=0;
-
-    }
-
-
-// Player sınıfındaki RollDice metodu
-private int RollDie()
+public class Player
 {
-    Random random = new Random();
-    return random.Next(1, 7);
-}
+    public string Name { get; }
+    public int Money { get; private set; }
 
-// Player sınıfındaki RollDice metodu
-public int RollDice()
-{
-    int dice1 = RollDie();
-    int dice2 = RollDie();
+    public int Position { get; private set; }
 
-    Console.WriteLine($"{Name} rolled a {dice1} and {dice2}.");
+    public Tile CurrentTile { get; private set; }
 
-    if (dice1 == dice2)
+    public List<Tile> playerCardList { get; private set; }
+    public bool IsInJail { get; private set; }
+    public int TurnsInJail { get; private set; }
+
+    private readonly Board board;
+
+
+    public Player(string name, Board board)
     {
-        
-        Console.WriteLine("Zar çifti geldi!");
-        return -1;
+        Name = name;
+        Money = 200;
+        Position = 0;
+        IsInJail = false;
+        TurnsInJail = 0;
+        this.board = board; // Store the reference to the Board
     }
 
-    return dice1 + dice2;
-}
 
-
-
- public void Move(Board board) 
-{
-
-    int steps = RollDice();
-    Position = (Position + steps) % board.Size;
-    Console.WriteLine($"{Name} rolled a {steps} and moved to position {Position} on the board.");
-
-    currentTile = board.tiles[Position]; 
-    Console.WriteLine($"{Name} is here:   \n "+currentTile.ToString());
-
-    // Hareket ettikten sonra tahtanın boyutunu kontrol et
-    if (Position >= board.Size)
+    // Player sınıfındaki RollDice metodu
+    private int RollDie()
     {
-        // Eğer pozisyon tahtanın boyutundan büyükse, başa dön
-        Position = Position % board.Size;
-    }
-}
-
-
-    public void BuildHouse(){
-
+        Random random = new Random();
+        return random.Next(1, 7);
     }
 
-    public void DrawCard(){
+    // Player sınıfındaki RollDice metodu
+    public int RollDice()
+    {
+        int dice1 = RollDie();
+        int dice2 = RollDie();
+
+        Console.WriteLine($"{Name} rolled a {dice1} and {dice2}.");
+
+        if (dice1 == dice2)
+        {
+
+            Console.WriteLine("Zar çifti geldi!");
+            return -1;
+        }
+
+        return dice1 + dice2;
+    }
+
+
+    public void TryToBuyTile()
+    {
+        if (CurrentTile is IOwnable ownableTile)
+        {
+
+            if (!ownableTile.IsOwned())
+            {
+                Console.WriteLine($"Do you want to buy {ownableTile.Name} for {ownableTile.Price} TL? (Y/N)");
+
+                string input = Console.ReadLine();
+                if (input.Trim().ToUpper() == "Y")
+                {
+                    ownableTile.Purchase(this);
+                    Console.WriteLine($"{Name} current balance : {Money}TL");
+                }
+                else
+                {
+                    Console.WriteLine($"{Name} decided not to buy {ownableTile.Name}.");
+                }
+            }
+            else
+            {
+                Console.WriteLine($"{ownableTile.Name} is already owned by {ownableTile.Owner.Name}.");
+            }
+        }
+    }
+
+
+
+    public void Move(Board board)
+    {
+        bool takeAnotherTurn = false;
+
+        do
+        {
+            int steps = RollDice();
+            Position = (Position + steps) % board.Size;
+            Console.WriteLine($"{Name} rolled a {steps} and moved to position {Position} on the board.");
+
+            CurrentTile = board.tiles[Position];
+            Console.WriteLine($"{Name} is here: \n" + CurrentTile.ToString());
+
+            // Call the method to ask the player if they want to buy the tile
+            TryToBuyTile();
+
+            // Check for the condition to take another turn
+            takeAnotherTurn = steps == -1; // -1 indicates a roll of the same value on both dice
+
+            // If taking another turn, inform the player and repeat the loop
+            if (takeAnotherTurn)
+            {
+                Console.WriteLine($"{Name} rolled the same value on both dice! Taking another turn.");
+            }
+
+        } while (takeAnotherTurn);
+
+        // Continue with the rest of the Move method...
+
+        // You can add any other logic here that should happen after the move
+        // For example, checking for special conditions, interactions with the current tile, etc.
+
+        // For now, let's just print a message to indicate the end of the turn
+        Console.WriteLine($"{Name}'s turn is complete.");
+    }
+
+
+    public void BuildHouse()
+    {
+
+    }
+
+    public void DrawCard()
+    {
 
     }
 
 
-    public void GoToJail(){
+
+    public void GoToJail(Board board)
+    {
+        Console.WriteLine($"{Name} goes to jail!");
+        IsInJail = true;
+        TurnsInJail = 2; // Number of turns the player should skip in jail
+
+        // Set the player's position to the jail tile
+        Position = 10;
+        CurrentTile = board.tiles[Position];
+    }
+
+    public void EndTurn()
+    {
+        // Decrease the TurnsInJail counter
+        if (IsInJail)
+        {
+            TurnsInJail--;
+
+            // Check if the player is still in jail or if their turns are up
+            if (TurnsInJail == 0)
+            {
+                Console.WriteLine($"{Name} is released from jail!");
+                IsInJail = false;
+            }
+            else
+            {
+                Console.WriteLine($"{Name} is still in jail. Turns remaining: {TurnsInJail}");
+            }
+        }
+
 
     }
-    public void PayToOtherPlayer(Player player,int amount)
+    public void PayToOtherPlayer(Player player, int amount)
     {
         Console.WriteLine($"{Name}, {player.Name}  oyuncusuna para verdi!");
         Money = Money - amount;
         player.Money = player.Money + amount; // Methodlarla da yapulabilir 
-        
+
     }
 
     public void EarnMoney(int amount)
@@ -95,12 +181,15 @@ public int RollDice()
 
     public void deductMoney(int i)
     {
-        Money= Money-i;
+        Money = Money - i;
     }
-    public int getUtilityCardCount(){  // Maksimum 2 kartı olabilir zaten ama aklıma efektif çözüm gelmedi 
+    public int getUtilityCardCount()
+    {  // Maksimum 2 kartı olabilir zaten ama aklıma efektif çözüm gelmedi 
         int counter = 0;
-        for (int i = 0 ; i < playerCardList.Count; i++){
-            if(playerCardList[i]is UtilityTile utilityTile){
+        for (int i = 0; i < playerCardList.Count; i++)
+        {
+            if (playerCardList[i] is UtilityTile utilityTile)
+            {
                 counter++;
 
             }
@@ -108,6 +197,11 @@ public int RollDice()
         return counter;
     }
 
-
+    internal void PayToBank(int amount)
+    {
+        
+        Money -= amount;
+        
+    }
 
 }
