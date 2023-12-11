@@ -51,9 +51,10 @@ public class Board
     Tile electricCompany = new UtilityTile(12, "Electric Company", "Description",50);
     Tile taksim = new Property(13, "taksim", "description", 60, null, Color.Pink);
     Tile besiktas = new Property(14, "besiktas", "description", 60, null, Color.Pink);
-    Tile bPasaStation = new TrainStation(5, "b Istasyonu", "Description", 50);
+    Tile bPasaStation = new TrainStation(15, "b Istasyonu", "Description", 50);
 
     Tile harbiye = new Property(16, "harbiye", "description", 60, null, Color.Orange);
+
     Tile sisli = new Property(18, "sisli", "description", 60, null, Color.Orange);
     Tile mecidiyekoy = new Property(19, "mecidiyekoy", "description", 60, null, Color.Orange);
     Tile freeParkingTile = new TaxAndParkingTile(20, "Free Parking Tile", "Description", 200); //Simdilik 200 yazdım fee yerine bankadaki para yazılacak 
@@ -65,11 +66,13 @@ public class Board
     Tile macka = new Property(27, "macka", "description", 60, null, Color.Yellow);
     Tile waterWorks = new UtilityTile(28, " Water Works", "Description",50);
     Tile tesvikiye = new Property(29, "tesvikiye", "description", 60, null, Color.Yellow);
+    Tile kodes= new Property(30,"kodes","sdsds",60,null,Color.Black);
     Tile levent = new Property(31, "levent", "description", 60, null, Color.Green);
     Tile etiler = new Property(32, "etiler", "description", 60, null, Color.Green);
 
     Tile bebek = new Property(34, "bebek", "description", 60, null, Color.Green);
     Tile sirkeciStation = new TrainStation(35, "Sirkeci Istasyonu", "Description", 50);
+    Tile  chanceCard = new ChanceCardTile(36,"Chance Card","sdsdds");
     Tile tarabya = new Property(37, "tarabya", "description", 60, null, Color.DarkBlue);
     Tile luxuryTaxTile = new TaxAndParkingTile(38, "Luxury Tax Tile", "Description", 150);
     Tile yenikoy = new Property(39, "yenikoy", "description", 60, null, Color.DarkBlue);
@@ -86,8 +89,7 @@ public class Board
 
     }
 
-    // The following method is commented out since it's incomplete and seems to be
-    // a placeholder for future functionality.
+    // a placeholder
 
     // public string GetTile(int position)
     // {
@@ -98,14 +100,12 @@ public class Board
     //     return "Invalid Position";
     // }
 
-    // The following method is commented out as well, as it's not fully implemented.
 
     public bool CheckGameStatus(List<Player> players)
     {
         return players.Count == 1;
     }
 
-    // The following method is commented out, as it's a placeholder for future functionality.
 
     // public void PerformAction(Player player)
     // {

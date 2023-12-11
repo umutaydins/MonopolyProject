@@ -43,14 +43,6 @@ public class Player
         int dice2 = RollDie();
 
         Console.WriteLine($"{Name} rolled a {dice1} and {dice2}.");
-
-        if (dice1 == dice2)
-        {
-
-            Console.WriteLine("Zar çifti geldi!");
-            return -1;
-        }
-
         return dice1 + dice2;
     }
 
@@ -86,12 +78,10 @@ public class Player
 
     public void Move(Board board)
     {
-        bool takeAnotherTurn = false;
-
-        do
-        {
+       
             int steps = RollDice();
             Position = (Position + steps) % board.Size;
+
             Console.WriteLine($"{Name} rolled a {steps} and moved to position {Position} on the board.");
 
             CurrentTile = board.tiles[Position];
@@ -100,31 +90,57 @@ public class Player
             // Call the method to ask the player if they want to buy the tile
             TryToBuyTile();
 
-            // Check for the condition to take another turn
-            takeAnotherTurn = steps == -1; // -1 indicates a roll of the same value on both dice
-
-            // If taking another turn, inform the player and repeat the loop
-            if (takeAnotherTurn)
-            {
-                Console.WriteLine($"{Name} rolled the same value on both dice! Taking another turn.");
-            }
-
-        } while (takeAnotherTurn);
-
-        // Continue with the rest of the Move method...
-
-        // You can add any other logic here that should happen after the move
-        // For example, checking for special conditions, interactions with the current tile, etc.
-
-        // For now, let's just print a message to indicate the end of the turn
+          
         Console.WriteLine($"{Name}'s turn is complete.");
     }
 
 
     public void BuildHouse()
+{
+    // Oyuncunun bulunduğu karenin bir mülk olup olmadığını kontrol et
+    if (CurrentTile is Property propertyTile)
     {
+        // Mülk sahibi ise ve ev inşa edebilecek durumdaysa devam et
+        if (propertyTile.Owner == this && CanBuildHouse(propertyTile))
+        {
+            // Evin fiyatı
+            int housePrice = 50; // Bu değeri oyunun kurallarına göre ayarlayın
 
+            // Oyuncunun ev inşa etmek için yeterli parası var mı kontrol et
+            if (Money >= housePrice)
+            {
+                // Ev inşa et
+                propertyTile.BuildHouse();
+
+                // Oyuncunun parasını azalt
+                PayToBank(housePrice);
+
+                Console.WriteLine($"{Name} has built a house on {propertyTile.Name}. Remaining money: {Money} TL");
+            }
+            else
+            {
+                Console.WriteLine($"{Name} does not have enough money to build a house.");
+            }
+        }
+        else
+        {
+            Console.WriteLine($"{Name} cannot build a house on this property.");
+        }
     }
+    else
+    {
+        Console.WriteLine($"{Name} is not on a property tile. Cannot build a house.");
+    }
+}
+private bool CanBuildHouse(Property propertyTile)
+{
+    // Burada ev inşa etmek için gerekli diğer kontrolleri yapabilirsiniz
+    // Örneğin, aynı renkteki tüm mülklerin aynı seviyede olup olmadığını kontrol etmek
+    // veya başka özel durumları kontrol etmek için kullanılabilir.
+    // Şu an için sadece ev sayısının bir sınıra ulaşıp ulaşmadığını kontrol ediyorum
+    return propertyTile.HouseCount < 4; // Örneğin maksimum 4 ev olabilir
+}
+
 
     public void DrawCard()
     {

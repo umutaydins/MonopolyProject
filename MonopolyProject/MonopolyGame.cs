@@ -36,18 +36,12 @@ class MonopolyProject
 
                 bool isDouble = false;
 
-// Örnek bir oyuncu hareketi
+//player move 
 do
 {
-    //int rollResult = player.RollDice();
-    
-    //Console.WriteLine($"{player.Name} rolled a {rollResult}.");
-    // Move the player on the board
+  
     player.Move(Board.Instance);
 
-    // Zar çifti gelmişse tekrar zar at
-    //isDouble = (rollResult == -1);
-    //Zarın çift gelme durumu player'ın move methodunun içinde kontrol edilebilir
 
     if (isDouble)
     {
@@ -55,24 +49,6 @@ do
         Console.WriteLine("Enter tuşuna basarak zar atın.");
         Console.ReadLine();
     }
-
-    
-
-    // Oyuncunun bulunduğu karenin bilgisini al
-    //string currentTile = Board.Instance.GetTile(player.Position);
-   // Console.WriteLine($"{player.Name} şu anda {currentTile} karesinde.");
-
-    
-
-
-
-    // Eğer Community Chest karesine gelinmişse kartı çek
-    //if (currentTile.Contains("Community Chest"))
-    //{
-    //    CommunityChestCard communityChestCard = new CommunityChestCard();
-    //    communityChestCard.DrawCard();
-   //}
-
 } while (isDouble);
 
               
