@@ -10,6 +10,7 @@ public class TrainStation : Tile, IOwnable
     public TrainStation(int id, string name, string description, int price)
         : base(id, name, description)
     {
+        this.Rent = 50;
         this.Price = price;
         this.Owner = null;
         this.StationsOwned = 0;
@@ -22,17 +23,11 @@ public class TrainStation : Tile, IOwnable
 
     public override void LandOn(Player player)
     {
-        Console.WriteLine($"Player {player.Name} landed on the Train Station tile.");
-        if (Owner != null)
+        if (Owner != player)
         {
             int totalRent = CalculateRent();
             Console.WriteLine($"Player {player.Name} pays ${totalRent} rent to {Owner.Name}.");
-            // Implement logic to transfer money from player to ownedBy
-        }
-        else
-        {
-            Console.WriteLine($"This Train Station is unowned. Would you like to buy it?");
-            // Implement logic for player to buy the Train Station
+            player.PayToOtherPlayer(Owner, totalRent);
         }
     }
 
@@ -41,7 +36,7 @@ public class TrainStation : Tile, IOwnable
     private int CalculateRent()
     {
 
-        return Rent * (int)Math.Pow(2, StationsOwned - 1); // sonradan düzenlenecek
+        return Rent * Owner.TrainStations; // sonradan düzenlenecek
     }
     public override string ToString()
     {
@@ -52,5 +47,6 @@ public class TrainStation : Tile, IOwnable
     {
         TileOwnershipManager ownershipManager = new TileOwnershipManager();
         ownershipManager.PurchaseTile(this, buyer);
+        buyer.TrainStations++;
     }
 }

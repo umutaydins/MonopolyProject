@@ -9,14 +9,10 @@ public class Player
 
     public int Position { get; private set; }
 
-    public int HouseCount { get; private set; }
-    public int HotelCount { get; private set; }
-
-
-
     public Tile CurrentTile { get; private set; }
 
     public List<Tile> playerCardList { get; private set; }
+    public int TrainStations {  get; set; }
     public bool IsInJail { get; private set; }
     public int TurnsInJail { get; private set; }
 
@@ -30,9 +26,8 @@ public class Player
         Position = 0;
         IsInJail = false;
         TurnsInJail = 0;
-        HouseCount= 0;
-        HotelCount=0;
         this.board = board; // Store the reference to the Board
+        TrainStations = 0;
     }
 
 
@@ -79,11 +74,7 @@ public class Player
                 Console.WriteLine($"{ownableTile.Name} is already owned by {ownableTile.Owner.Name}.");
             }
         }
-
-    
     }
-
-
 
 
 
@@ -91,20 +82,16 @@ public class Player
     {
        
             int steps = RollDice();
-            Position = 30;
+            Position = (Position + steps) % board.Size;
 
             Console.WriteLine($"{Name} rolled a {steps} and moved to position {Position} on the board.");
 
-            CurrentTile = board.tiles[30];
+            CurrentTile = board.tiles[Position];
             Console.WriteLine($"{Name} is here: \n" + CurrentTile.ToString());
 
             // Call the method to ask the player if they want to buy the tile
             TryToBuyTile();
             CurrentTile.LandOn(this);
-            
-
-
-            
 
           
         Console.WriteLine($"{Name}'s turn is complete.");
@@ -132,7 +119,6 @@ public class Player
                 PayToBank(housePrice);
 
                 Console.WriteLine($"{Name} has built a house on {propertyTile.Name}. Remaining money: {Money} TL");
-                HouseCount++;
             }
             else
             {
@@ -216,11 +202,6 @@ private bool CanBuildHouse(Property propertyTile)
     {
         Money = Money - i;
     }
-    public void SetPositionToBeginning()
-{
-    Position = 0;
-    CurrentTile = board.tiles[Position];
-}
     public int getUtilityCardCount()
     {  // Maksimum 2 kartı olabilir zaten ama aklıma efektif çözüm gelmedi 
         int counter = 0;
@@ -241,35 +222,5 @@ private bool CanBuildHouse(Property propertyTile)
         Money -= amount;
         
     }
-
-    public void goToNeartestUtiliy(){
-
-        int currentPosition = Position;
-
-    int nearestUtilityIndex = -1;
-    int minDistance = int.MaxValue;
-
-    for (int i = 0; i < board.tiles.Count; i++)
-    {
-        if (board.tiles[i] is UtilityTile utilityTile)
-        {
-            int distance = (i - currentPosition + board.Size) % board.Size;
-
-            if (distance < minDistance)
-            {
-                minDistance = distance;
-                nearestUtilityIndex = i;
-            }
-        }
-    }
-
-    // Move to the nearest utility tile
-    Position = nearestUtilityIndex;
-    CurrentTile = board.tiles[nearestUtilityIndex];
-
-    Console.WriteLine($"{Name} moved to the nearest utility tile: {CurrentTile.Name}");
-
-    }
-
 
 }

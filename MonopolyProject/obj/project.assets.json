@@ -8,19 +8,19 @@
     "net7.0": []
   },
   "packageFolders": {
-    "/Users/umutaydin/.nuget/packages/": {}
+    "/Users/pelintunc/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/umutaydin/C#/MonopolyProject/MonopolyProject/MonopolyProject.csproj",
+      "projectUniqueName": "/Users/pelintunc/VsCodeProjects/MonopolyProject/MonopolyProject/MonopolyProject.csproj",
       "projectName": "MonopolyProject",
-      "projectPath": "/Users/umutaydin/C#/MonopolyProject/MonopolyProject/MonopolyProject.csproj",
-      "packagesPath": "/Users/umutaydin/.nuget/packages/",
-      "outputPath": "/Users/umutaydin/C#/MonopolyProject/MonopolyProject/obj/",
+      "projectPath": "/Users/pelintunc/VsCodeProjects/MonopolyProject/MonopolyProject/MonopolyProject.csproj",
+      "packagesPath": "/Users/pelintunc/.nuget/packages/",
+      "outputPath": "/Users/pelintunc/VsCodeProjects/MonopolyProject/MonopolyProject/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/umutaydin/.nuget/NuGet/NuGet.Config"
+        "/Users/pelintunc/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
