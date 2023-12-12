@@ -43,12 +43,6 @@ do
     player.Move(Board.Instance);
 
 
-    if (isDouble)
-    {
-        Console.WriteLine($"{player.Name}, zar çifti attı! Tekrar zar atılıyor.");
-        Console.WriteLine("Enter tuşuna basarak zar atın.");
-        Console.ReadLine();
-    }
 } while (isDouble);
 
               

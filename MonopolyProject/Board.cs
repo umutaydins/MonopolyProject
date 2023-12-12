@@ -33,7 +33,7 @@ public class Board
 
 
     // Define the list of tiles
-    Tile deneme1 = new UtilityTile(0, "Baslangıc", "Description",50); // Baslangıc tile'ı yapılacak
+    Tile deneme1 = new TaxAndParkingTile(0, "Baslangıc", "Description",50); // Baslangıc tile'ı yapılacak
     Tile kasimpasa = new Property(1, "kasimpasa", "Description", 60, null, Color.Brown);
     Tile communityChestCardTile = new CommunityChestCardTile(2, "Community Chest Card", "Description");
     Tile dolapdere = new Property(3, "dolapdere", "description", 60, null, Color.Brown);
@@ -42,7 +42,7 @@ public class Board
     Tile haydarPasaStation = new TrainStation(5, "Haydarpasa Istasyonu", "Description",50);// simdilik 50 yazdım kullanıcının istasyon sayısına göre ayaralanacak
 
     Tile sultanahmet = new Property(6, "sultanahmet", "description", 60, null, Color.Blue);
-    Tile chanceCardTile = new ChanceCardTile(7, "deneme", "Description");
+    Tile chanceCardTile = new ChanceCardTile(7, "ChanceCardTile", "none");
     Tile karakoy = new Property(8, "karakoy", "description", 60, null, Color.Blue);
 
     Tile sirkeci = new Property(9, "sirkeci", "description", 60, null, Color.Blue);
@@ -69,6 +69,7 @@ public class Board
     Tile kodes= new Property(30,"kodes","sdsds",60,null,Color.Black);
     Tile levent = new Property(31, "levent", "description", 60, null, Color.Green);
     Tile etiler = new Property(32, "etiler", "description", 60, null, Color.Green);
+    Tile communityChestCardTileTwo = new CommunityChestCardTile(33, "Community Chest Card two", "Description");
 
     Tile bebek = new Property(34, "bebek", "description", 60, null, Color.Green);
     Tile sirkeciStation = new TrainStation(35, "Sirkeci Istasyonu", "Description", 50);

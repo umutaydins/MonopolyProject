@@ -7,7 +7,7 @@ public class Property : Tile, IOwnable
     public int Price { get; set; }
     public Player Owner { get; set; }
     private Color Color { get; set; }
-        public int HouseCount { get; private set; } // New property to track the number of houses
+    public int HouseCount { get; private set; } // New property to track the number of houses
 
 
 
