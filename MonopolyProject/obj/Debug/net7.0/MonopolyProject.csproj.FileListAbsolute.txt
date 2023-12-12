@@ -26,3 +26,17 @@
 /Users/pelintunc/MonopolyProject/MonopolyProject/MonopolyProject/obj/Debug/net7.0/MonopolyProject.pdb
 /Users/pelintunc/MonopolyProject/MonopolyProject/MonopolyProject/obj/Debug/net7.0/MonopolyProject.genruntimeconfig.cache
 /Users/pelintunc/MonopolyProject/MonopolyProject/MonopolyProject/obj/Debug/net7.0/ref/MonopolyProject.dll
+C:\Users\MONSTER\Source\Repos\MonopolyProject\MonopolyProject\bin\Debug\net7.0\MonopolyProject.exe
+C:\Users\MONSTER\Source\Repos\MonopolyProject\MonopolyProject\bin\Debug\net7.0\MonopolyProject.deps.json
+C:\Users\MONSTER\Source\Repos\MonopolyProject\MonopolyProject\bin\Debug\net7.0\MonopolyProject.runtimeconfig.json
+C:\Users\MONSTER\Source\Repos\MonopolyProject\MonopolyProject\bin\Debug\net7.0\MonopolyProject.dll
+C:\Users\MONSTER\Source\Repos\MonopolyProject\MonopolyProject\bin\Debug\net7.0\MonopolyProject.pdb
+C:\Users\MONSTER\Source\Repos\MonopolyProject\MonopolyProject\obj\Debug\net7.0\MonopolyProject.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\MONSTER\Source\Repos\MonopolyProject\MonopolyProject\obj\Debug\net7.0\MonopolyProject.AssemblyInfoInputs.cache
+C:\Users\MONSTER\Source\Repos\MonopolyProject\MonopolyProject\obj\Debug\net7.0\MonopolyProject.AssemblyInfo.cs
+C:\Users\MONSTER\Source\Repos\MonopolyProject\MonopolyProject\obj\Debug\net7.0\MonopolyProject.csproj.CoreCompileInputs.cache
+C:\Users\MONSTER\Source\Repos\MonopolyProject\MonopolyProject\obj\Debug\net7.0\MonopolyProject.dll
+C:\Users\MONSTER\Source\Repos\MonopolyProject\MonopolyProject\obj\Debug\net7.0\refint\MonopolyProject.dll
+C:\Users\MONSTER\Source\Repos\MonopolyProject\MonopolyProject\obj\Debug\net7.0\MonopolyProject.pdb
+C:\Users\MONSTER\Source\Repos\MonopolyProject\MonopolyProject\obj\Debug\net7.0\MonopolyProject.genruntimeconfig.cache
+C:\Users\MONSTER\Source\Repos\MonopolyProject\MonopolyProject\obj\Debug\net7.0\ref\MonopolyProject.dll

@@ -12,6 +12,7 @@ public class Player
     public Tile CurrentTile { get; private set; }
 
     public List<Tile> playerCardList { get; private set; }
+    public int TrainStations {  get; set; }
     public bool IsInJail { get; private set; }
     public int TurnsInJail { get; private set; }
 
@@ -26,6 +27,7 @@ public class Player
         IsInJail = false;
         TurnsInJail = 0;
         this.board = board; // Store the reference to the Board
+        TrainStations = 0;
     }
 
 
@@ -89,6 +91,7 @@ public class Player
 
             // Call the method to ask the player if they want to buy the tile
             TryToBuyTile();
+            CurrentTile.LandOn(this);
 
           
         Console.WriteLine($"{Name}'s turn is complete.");
