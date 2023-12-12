@@ -33,6 +33,7 @@ public class TrainStation : Tile, IOwnable
         {
             Console.WriteLine($"This Train Station is unowned. Would you like to buy it?");
             // Implement logic for player to buy the Train Station
+            //asdasdasdasdsadsadasd
         }
     }
 

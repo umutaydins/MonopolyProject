@@ -8,24 +8,26 @@
     "net7.0": []
   },
   "packageFolders": {
-    "/Users/umutaydin/.nuget/packages/": {}
+    "C:\\Users\\MONSTER\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/umutaydin/C#/MonopolyProject/MonopolyProject/MonopolyProject.csproj",
+      "projectUniqueName": "C:\\Users\\MONSTER\\Source\\Repos\\MonopolyProject\\MonopolyProject\\MonopolyProject.csproj",
       "projectName": "MonopolyProject",
-      "projectPath": "/Users/umutaydin/C#/MonopolyProject/MonopolyProject/MonopolyProject.csproj",
-      "packagesPath": "/Users/umutaydin/.nuget/packages/",
-      "outputPath": "/Users/umutaydin/C#/MonopolyProject/MonopolyProject/obj/",
+      "projectPath": "C:\\Users\\MONSTER\\Source\\Repos\\MonopolyProject\\MonopolyProject\\MonopolyProject.csproj",
+      "packagesPath": "C:\\Users\\MONSTER\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\MONSTER\\Source\\Repos\\MonopolyProject\\MonopolyProject\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/umutaydin/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\MONSTER\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -59,7 +61,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.403/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
       }
     }
   }
