@@ -8,38 +8,61 @@ public class Property : Tile, IOwnable
     public Player Owner { get; set; }
     private string Color { get; set; }
     public int HouseCount { get; private set; } // New property to track the number of houses
+    public int HotelCount { get; private set; } 
+    public bool IsBuyDecisionMade { get; set; }
+    public bool HasHotel { get; private set; }
 
 
 
-     public override void LandOn(Player player)
-    {       
-        if (IsOwned() && Owner != player)
+
+
+
+    public override void LandOn(Player player)
+    {
+        if (!IsBuyDecisionMade)
         {
-            int rent = CalculateRent();
-            player.PayToOtherPlayer(Owner,rent);
-        }
-
-        else if (IsOwned() && Owner == player){
-               if(CanBuildHouse()!=false){
-                Console.WriteLine("This property is yours. Do you want to build a house?");
-                string input = Console.ReadLine();
-                if (input.Trim().ToUpper() == "Y")
-                {
-                    BuildHouse();
-                }
-                
-
+            if (IsOwned() && Owner != player)
+            {
+                int rent = CalculateRent();
+                player.PayToOtherPlayer(Owner, rent);
             }
-            else{
-                Console.WriteLine("You cannot build a house. Do you want to build a hotel?");
-                //Otel insaa etme 
-            }    
+            else if (IsOwned() && Owner == player)
+            {
+                if (HasHotel)
+                {
+                    Console.WriteLine("This property has a hotel. You cannot build houses or hotels.");
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("This property is yours. Do you want to build a house or hotel?\n !You can build hotel only after you build 4 house!");
+                    int housePrice = CalculateMoneyForBuildingHouse();
+                    int hotelPrice= CalculateMoneyForBuildingHotel();
+                    Console.WriteLine($"House price : {housePrice}TL\nHotel price: {hotelPrice}TL");
+                    Console.ResetColor();
+                    string input = Console.ReadLine();
+                    if (input.Trim().ToUpper() == "Y")
+                    {
+                        BuildHouseOrHotel();
+                    }
+                }
+            }
+            else
+            {
+                // when the property is not owned
+            }
         }
-        else{
-            
+        else
+        {
+            // Reset the flag for the next time the player lands on this tile
+            IsBuyDecisionMade = false;
+
+            // Your additional logic for when the player has decided to buy
+            // For example, you might want to display a message indicating the purchase
+            Console.WriteLine($"{player.Name} has decided to buy {Name}.");
         }
-        
     }
+
 
     private int CalculateRent()
     {
@@ -63,21 +86,22 @@ public class Property : Tile, IOwnable
         this.Price = price;
         this.Owner = owner;
         this.Color = color;
-        this.HouseCount = 0; // Initialize the house count
+        this.HouseCount = 0;
+        this.HotelCount=0;
     }
 
 
     public bool IsOwned() { return Owner != null; }
-   
+
     public void BuildHouse()
     {
         if (CanBuildHouse())
         {
             HouseCount++;
-            int houseMoney= CalculateMoneyForBuildingHouse();
+            int houseMoney = CalculateMoneyForBuildingHouse();
             Owner.deductMoney(houseMoney);
-            
-            Console.WriteLine($"A house is built on {Name} and payed {houseMoney}. Total houses on {Name}: {HouseCount}");
+
+            Console.WriteLine($"A house is built on {Name} and {Owner.Name} payed {houseMoney}TL. Total houses on {Name}: {HouseCount}");
         }
         else
         {
@@ -85,10 +109,54 @@ public class Property : Tile, IOwnable
         }
     }
 
+
+    public void BuildHouseOrHotel()
+    {
+        if (CanBuildHouse())
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"A house is being built....");
+            Console.ResetColor();
+            BuildHouse();
+        
+        }
+        else if (CanBuildHotel())
+
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"A hotel is being built....");
+            Console.ResetColor();
+            BuildHotel();
+            
+        }
+
+    }
+
+
     private bool CanBuildHouse()
     {
         return HouseCount < 4; // Example: Maximum of 4 houses allowed
     }
+
+    private bool CanBuildHotel()
+    {
+        return HouseCount == 4 && !HasHotel; // Example: Build hotel if there are 4 houses and no hotel
+    }
+
+
+    private void BuildHotel()
+    {
+        int hotelMoney = CalculateMoneyForBuildingHotel();
+        Owner.deductMoney(hotelMoney);
+
+        Console.WriteLine($"A hotel is built on {Name} and {Owner.Name} paid {hotelMoney}TL. Total hotels on {Name}: 1");
+
+        // Reset house count
+        HouseCount = 0;
+        HotelCount++;
+        HasHotel = true;
+    }
+
 
 
     private int CalculateMoneyForBuildingHouse()
@@ -100,12 +168,29 @@ public class Property : Tile, IOwnable
             case "Pink": return 100;
             case "Orange": return 100;
             case "Red": return 150;
-            case "Yellow": return  150;
-            case "Green": return  200;
+            case "Yellow": return 150;
+            case "Green": return 200;
             case "DarkBlue": return 200;
             default: return 0;
         }
     }
+
+    private int CalculateMoneyForBuildingHotel()
+    {
+        switch (Color)
+        {
+            case "Brown": return 5 * 50; // 5 times the house cost for a hotel
+            case "Blue": return 5 * 50;
+            case "Pink": return 5 * 100;
+            case "Orange": return 5 * 100;
+            case "Red": return 5 * 150;
+            case "Yellow": return 5 * 150;
+            case "Green": return 5 * 200;
+            case "DarkBlue": return 5 * 200;
+            default: return 0;
+        }
+    }
+
 
 
 
@@ -117,7 +202,8 @@ public class Property : Tile, IOwnable
 
         string result = base.ToString(); // Use the common part from the base class
 
-                result += $"\n| House Count: {HouseCount, 9} |";
+        result += $"\n| House Count: {HouseCount,9} |";
+        result += $"\n| Hotel Count: {HouseCount,9} |";
 
 
 

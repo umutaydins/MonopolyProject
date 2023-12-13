@@ -6,6 +6,7 @@ public interface IOwnable
     Player Owner { get; set; }
     bool IsOwned();
     void Purchase(Player buyer);
+    public bool IsBuyDecisionMade { get; set; }
 }
 
 

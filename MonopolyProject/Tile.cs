@@ -4,12 +4,12 @@ public abstract class Tile
 {
     public int Id { get; }
     public string Name { get; }
-    public string Description { get; }
+    public string Description { get; set; }
 
-     public string GetName()
+     /*public string GetName()
     {
         return Name;
-    }
+    }*/
 
     
     

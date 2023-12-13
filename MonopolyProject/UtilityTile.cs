@@ -12,6 +12,7 @@ public class UtilityTile : Tile,IOwnable
     public int Price { get; private set; }
 
     public Player Owner { get; set; }
+    public bool IsBuyDecisionMade { get; set; }
 
     
 

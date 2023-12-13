@@ -6,6 +6,7 @@ public class TrainStation : Tile, IOwnable
     public int Price { get; set; }
     public Player Owner { get; set; }
     public int StationsOwned { get; set; }
+    public bool IsBuyDecisionMade { get; set; }
 
     public TrainStation(int id, string name, string description, int price)
         : base(id, name, description)
