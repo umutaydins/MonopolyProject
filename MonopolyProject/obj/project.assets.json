@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\MONSTER\\Source\\Repos\\MonopolyProject\\MonopolyProject\\MonopolyProject.csproj",
+      "projectUniqueName": "C:\\Users\\MONSTER\\source\\repos\\MonopolyProject\\MonopolyProject\\MonopolyProject.csproj",
       "projectName": "MonopolyProject",
-      "projectPath": "C:\\Users\\MONSTER\\Source\\Repos\\MonopolyProject\\MonopolyProject\\MonopolyProject.csproj",
+      "projectPath": "C:\\Users\\MONSTER\\source\\repos\\MonopolyProject\\MonopolyProject\\MonopolyProject.csproj",
       "packagesPath": "C:\\Users\\MONSTER\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\MONSTER\\Source\\Repos\\MonopolyProject\\MonopolyProject\\obj\\",
+      "outputPath": "C:\\Users\\MONSTER\\source\\repos\\MonopolyProject\\MonopolyProject\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\MONSTER\\AppData\\Roaming\\NuGet\\NuGet.Config",

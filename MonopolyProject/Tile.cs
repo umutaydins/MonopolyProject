@@ -4,12 +4,12 @@ public abstract class Tile
 {
     public int Id { get; }
     public string Name { get; }
-    public string Description { get; }
+    public string Description { get; set; }
 
-     public string GetName()
+     /*public string GetName()
     {
         return Name;
-    }
+    }*/
 
     
     
@@ -23,6 +23,10 @@ public abstract class Tile
 
     public abstract void LandOn(Player player);
 
+    public void Display(string route)
+    {
+        Console.Write("|" + Name + "|" + route);
+    }
 
     public virtual string ToString()
     {

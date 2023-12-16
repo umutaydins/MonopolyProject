@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\MonopolyProject"
   ],
-  "SelectedNode": "\\MonopolyProject.sln",
+  "SelectedNode": "\\MonopolyProject\\MonopolyGame.cs",
   "PreviewInSolutionExplorer": false
 }

@@ -5,73 +5,124 @@ using System.Drawing;
 class MonopolyProject
 {
     static void Main()
-    { 
+    {
+        int playerCount = 0;
 
+        while (true)
+        {
+            try
+            {
+                // Determine the number of players
+                Console.Write("Enter the number of players (2-4): ");
+                playerCount = int.Parse(Console.ReadLine());
 
-        // Determine the number of players
-        Console.Write("Enter the number of players (2-4): ");
-        int playerCount = int.Parse(Console.ReadLine());
+                // Check if the entered number of players is within the valid range
+                if (playerCount < 2 || playerCount > 4)
+                {
+                    throw new ArgumentException("Number of players must be between 2 and 4.");
+                }
+
+                break; // Exit the loop if a valid number of players is entered
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Please enter a valid number.");
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
         // Create player list
         List<Player> players = new List<Player>();
         Board.Instance.InitializeBoard();
 
         for (int i = 1; i <= playerCount; i++)
         {
-            Console.Write($"Enter name of player: ");
-            string playerName = Console.ReadLine();
-            Player player = new Player(playerName,Board.Instance);
+            string playerName = GetPlayerName(players, i);
+            Player player = new Player(playerName, Board.Instance);
             players.Add(player);
         }
 
         while (players.Count > 1)
         {
-            // Her bir oyuncunun sırası
-            foreach (Player player in players.ToList()) // ToList kullanarak döngü içinde listenin değişmesini önle
+            // Inside the while loop where players take turns
+            foreach (Player player in players.ToList())
             {
-                Console.WriteLine($"Şu anda sıra {player.Name}'de.");
+                Console.WriteLine($"\nIt's {player.Name}'s turn.");
 
-                // Oyuncuya zar atması için Enter tuşuna basması istenir
-                Console.WriteLine("Enter tuşuna basarak zar atın.");
+                // Check if the player is in jail
+                if (player.IsInJail)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"{player.Name} is in jail and cannot play this turn.");
+                    Console.ResetColor();
+                    player.TurnsInJail++;
+                    continue; // Skip the rest of the turn for players in jail
+                }
+
+                Console.WriteLine("Press Enter to roll the dice.");
                 Console.ReadLine();
-
-                bool isDouble = false;
-
-//player move 
-do
-{
-  
-    player.Move(Board.Instance);
-
-
-    if (isDouble)
-    {
-        Console.WriteLine($"{player.Name}, zar çifti attı! Tekrar zar atılıyor.");
-        Console.WriteLine("Enter tuşuna basarak zar atın.");
-        Console.ReadLine();
-    }
-} while (isDouble);
-
-              
-                // Diğer oyuncuların iflas edip etmediğini kontrol et
+                Board.Instance.DisplayBoard(players);
+                player.Move(Board.Instance);
+                Console.Clear();
                 CheckBankruptcy(players);
 
-                // Oyun durumunu kontrol et, bir oyuncu kazandı mı?
                 if (Board.Instance.CheckGameStatus(players))
                 {
-                    Console.WriteLine($"{player.Name} oyunu kazandı!");
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"{players[0].Name} wins the game!");
+                    Console.ResetColor();
                     return;
-                    Console.WriteLine($"denem yaz");
                 }
             }
+
         }
 
-        // Oyun bittiğinde kalan oyuncuyu ekrana yazdır
-        Console.WriteLine($"{players[0].Name} oyunu kazandı!");
+
+        Console.WriteLine($"{players[0].Name} wins the game!");
+    }
+
+    static string GetPlayerName(List<Player> existingPlayers, int playerNumber)
+    {
+        while (true)
+        {
+            try
+            {
+                Console.Write($"Enter name of player {playerNumber}: ");
+                string playerName = Console.ReadLine();
+
+                if (string.IsNullOrWhiteSpace(playerName))
+                {
+                    throw new ArgumentException("Player name cannot be empty or whitespace.");
+                }
+
+                if (existingPlayers.Any(player => player.Name.Equals(playerName, StringComparison.OrdinalIgnoreCase)))
+                {
+                    throw new ArgumentException("Player name must be unique.");
+                }
+
+                return playerName;
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
     }
 
     static void CheckBankruptcy(List<Player> players)
     {
-        // İflas eden oyuncuları listeden çıkart
-        players.RemoveAll(player => player.Money <= 0);
+        List<Player> bankruptPlayers = players.FindAll(player => player.Money <= 0);
+
+        foreach (Player player in bankruptPlayers)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"{player.Name} has gone bankrupt and lost the game!");
+            Console.ResetColor();
+            players.Remove(player);
+        }
     }
+
 }

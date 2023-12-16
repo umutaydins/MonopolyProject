@@ -7,14 +7,19 @@ public class Player
     public string Name { get; }
     public int Money { get; private set; }
 
-    public int Position { get; private set; }
+    public int Position { get; set; }
 
     public Tile CurrentTile { get; private set; }
 
     public List<Tile> playerCardList { get; private set; }
     public int TrainStations {  get; set; }
-    public bool IsInJail { get; private set; }
-    public int TurnsInJail { get; private set; }
+    public bool IsInJail { get; set; }
+    public int TurnsInJail { get; set; }
+
+    public int HouseCount { get; private set; }
+    public int HotelCount { get; private set; }
+
+
 
     private readonly Board board;
 
@@ -22,10 +27,13 @@ public class Player
     public Player(string name, Board board)
     {
         Name = name;
+        Money = 20000;
         Money = 400;
         Position = 0;
         IsInJail = false;
         TurnsInJail = 0;
+        HouseCount= 0;
+        HotelCount=0;
         this.board = board; // Store the reference to the Board
         TrainStations = 0;
     }
@@ -53,16 +61,23 @@ public class Player
     {
         if (CurrentTile is IOwnable ownableTile)
         {
-
             if (!ownableTile.IsOwned())
+
+
             {
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine($"Do you want to buy {ownableTile.Name} for {ownableTile.Price} TL? (Y/N)");
+                Console.ResetColor();
 
                 string input = Console.ReadLine();
                 if (input.Trim().ToUpper() == "Y")
                 {
                     ownableTile.Purchase(this);
-                    Console.WriteLine($"{Name} current balance : {Money}TL");
+                    Console.WriteLine($"{Name} current balance: {Money} TL");
+
+                    // Set the flag to indicate that the player has decided to buy
+                    ownableTile.IsBuyDecisionMade = true;
+                    return;
                 }
                 else
                 {
@@ -79,23 +94,22 @@ public class Player
 
 
     public void Move(Board board)
-    {
-       
-            int steps = RollDice();
-            Position = (Position + steps) % board.Size;
+    {       
+        int steps = RollDice();
+        Position = (Position + steps) % board.Size;
 
-            Console.WriteLine($"{Name} rolled a {steps} and moved to position {Position} on the board.");
+        Console.WriteLine($"{Name} rolled a {steps} and moved to position {Position} on the board.");
 
-            CurrentTile = board.tiles[Position];
-            Console.WriteLine($"{Name} is here: \n" + CurrentTile.ToString());
-            Console.WriteLine("Total Money on Board: " + board.cash);
+        CurrentTile = board.Tiles[Position];
+        Console.WriteLine($"{Name} is here: \n" + CurrentTile.ToString());
+        Console.WriteLine("Total Money on Board: " + board.cash);
 
-            // Call the method to ask the player if they want to buy the tile
-            TryToBuyTile();
-            CurrentTile.LandOn(this);
+        // Call the method to ask the player if they want to buy the tile
+        TryToBuyTile();
+        CurrentTile.LandOn(this);
 
           
-        Console.WriteLine($"{Name}'s turn is complete.");
+    Console.WriteLine($"{Name}'s turn is complete.\n----------------------------------------");
     }
 
 
@@ -161,7 +175,7 @@ private bool CanBuildHouse(Property propertyTile)
 
         // Set the player's position to the jail tile
         Position = 10;
-        CurrentTile = board.tiles[Position];
+        CurrentTile = board.Tiles[Position];
     }
 
     public void EndTurn()
@@ -187,7 +201,7 @@ private bool CanBuildHouse(Property propertyTile)
     }
     public void PayToOtherPlayer(Player player, int amount)
     {
-        Console.WriteLine($"{Name}, {player.Name}  oyuncusuna para verdi!");
+        Console.WriteLine($"{Name} payed {amount}TL to {player.Name}!");
         Money = Money - amount;
         player.Money = player.Money + amount; // Methodlarla da yapulabilir 
 
@@ -223,5 +237,39 @@ private bool CanBuildHouse(Property propertyTile)
         Money -= amount;
         
     }
+    public void goToNeartestUtiliy(){
+
+        int currentPosition = Position;
+
+    int nearestUtilityIndex = -1;
+    int minDistance = int.MaxValue;
+
+    for (int i = 0; i < board.Tiles.Count; i++)
+    {
+        if (board.Tiles[i] is UtilityTile utilityTile)
+        {
+            int distance = (i - currentPosition + board.Size) % board.Size;
+
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                nearestUtilityIndex = i;
+            }
+        }
+    }
+
+    // Move to the nearest utility tile
+    Position = nearestUtilityIndex;
+    CurrentTile = board.Tiles[nearestUtilityIndex];
+
+    Console.WriteLine($"{Name} moved to the nearest utility tile: {CurrentTile.Name}");
+
+    }
+    public void SetPositionToBeginning()
+{
+    Position = 0;
+    CurrentTile = board.Tiles[Position];
+}
+
 
 }
