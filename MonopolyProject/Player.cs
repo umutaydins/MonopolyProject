@@ -22,7 +22,7 @@ public class Player
     public Player(string name, Board board)
     {
         Name = name;
-        Money = 200;
+        Money = 400;
         Position = 0;
         IsInJail = false;
         TurnsInJail = 0;
@@ -88,6 +88,7 @@ public class Player
 
             CurrentTile = board.tiles[Position];
             Console.WriteLine($"{Name} is here: \n" + CurrentTile.ToString());
+            Console.WriteLine("Total Money on Board: " + board.cash);
 
             // Call the method to ask the player if they want to buy the tile
             TryToBuyTile();

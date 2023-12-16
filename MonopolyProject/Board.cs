@@ -5,6 +5,7 @@ using System.Drawing;
 public class Board
 {
     private static Board instance;
+    public int  cash{ get; set; }
     public List<Tile> tiles { get; set; }
 
 
@@ -12,6 +13,7 @@ public class Board
     private Board()
     {
         // Initialize the board with tiles
+        cash = 0;
         Size = 40; // Assuming a standard Monopoly board size
         InitializeBoard();
     }
@@ -33,11 +35,11 @@ public class Board
 
 
     // Define the list of tiles
-    Tile deneme1 = new UtilityTile(0, "Baslangıc", "Description",50); // Baslangıc tile'ı yapılacak
+    Tile start = new DefaultTile(0, "Baslangıc", "Description",200,Condition.Collect); // Baslangıc tile'ı yapılacak
     Tile kasimpasa = new Property(1, "kasimpasa", "Description", 60, null, Color.Brown);
     Tile communityChestCardTile = new CommunityChestCardTile(2, "Community Chest Card", "Description");
     Tile dolapdere = new Property(3, "dolapdere", "description", 60, null, Color.Brown);
-    Tile incomeTaxTile = new TaxAndParkingTile(4, "Income Tax Tile", "Description", 200);
+    Tile incomeTaxTile = new DefaultTile(4, "Income Tax Tile", "Description", 200,Condition.PlaceBoard);
 
     Tile haydarPasaStation = new TrainStation(5, "Haydarpasa Istasyonu", "Description",50);// simdilik 50 yazdım kullanıcının istasyon sayısına göre ayaralanacak
 
@@ -57,7 +59,7 @@ public class Board
 
     Tile sisli = new Property(18, "sisli", "description", 60, null, Color.Orange);
     Tile mecidiyekoy = new Property(19, "mecidiyekoy", "description", 60, null, Color.Orange);
-    Tile freeParkingTile = new TaxAndParkingTile(20, "Free Parking Tile", "Description", 200); //Simdilik 200 yazdım fee yerine bankadaki para yazılacak 
+    Tile freeParkingTile = new DefaultTile(20, "Free Parking Tile", "Description", 0,Condition.CollectBoard); //Simdilik 200 yazdım fee yerine bankadaki para yazılacak 
     Tile erenkoy = new Property(21, "erenkoy", "description", 60, null, Color.Red);
     Tile bostanci = new Property(23, "bostanci", "description", 60, null, Color.Red);
     Tile caddebostan = new Property(24, "caddebostan", "description", 60, null, Color.Red);
@@ -74,7 +76,7 @@ public class Board
     Tile sirkeciStation = new TrainStation(35, "Sirkeci Istasyonu", "Description", 50);
     Tile  chanceCard = new ChanceCardTile(36,"Chance Card","sdsdds");
     Tile tarabya = new Property(37, "tarabya", "description", 60, null, Color.DarkBlue);
-    Tile luxuryTaxTile = new TaxAndParkingTile(38, "Luxury Tax Tile", "Description", 150);
+    Tile luxuryTaxTile = new DefaultTile(38, "Luxury Tax Tile", "Description", 150,Condition.PlaceBoard);
     Tile yenikoy = new Property(39, "yenikoy", "description", 60, null, Color.DarkBlue);
 
     public void InitializeBoard()
@@ -82,8 +84,7 @@ public class Board
         // Initialize the list of tiles
         tiles = new List<Tile>
         {
-            deneme1,kasimpasa, communityChestCardTile, dolapdere, incomeTaxTile,haydarPasaStation,sultanahmet, chanceCardTile, karakoy,  sirkeci,deneme2, beyoglu,electricCompany, taksim, besiktas, bPasaStation, harbiye, sisli,
-            mecidiyekoy,freeParkingTile, erenkoy,chanceCardTile, bostanci, caddebostan, nisantasi, macka, waterWorks,tesvikiye,  levent,etiler, communityChestCardTile,bebek, sirkeciStation,tarabya, luxuryTaxTile,yenikoy
+            start,luxuryTaxTile,incomeTaxTile,freeParkingTile
         };
 
 
