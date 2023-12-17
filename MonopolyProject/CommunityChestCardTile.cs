@@ -1,44 +1,49 @@
 using System;
 using System.Drawing;
+
 public class CommunityChestCardTile: Tile
+
 {
+    public static List<Player> players;
   
     public CommunityChestCardTile(int id, string name, string description) : base(id, name, description)
     {
 
+
+
     }
 
     public override void LandOn(Player player)
-    {
+    { 
         Console.WriteLine($"{player.Name} landed on {Name}.");
-        DrawRandomCommunitycard(player);
+        DrawRandomCommunitycard(player,players);
     }
 
-    private void DrawRandomCommunitycard(Player player)
+    private void DrawRandomCommunitycard(Player player, List<Player> players)
+{
+    // list of chance card actions
+    List<string> communityCardAction = new List<string>
     {
-        // list of chance card actions
-        List<string> communityCardAction = new List<string>
-        {
-            "Collect 200Ꝟ",
-            "Collect 100Ꝟ",
-            "Place 100 on the board",
-            "Place on the board 40Ꝟ for each owned house, and 115Ꝟ for each owned hotel",
-            "Travel to the nearest utility (electric company or water works). Collect 200Ꝟ if you pass through the beginning tile",
-            "Advance to the beginning tile",
-            "Travel to jail immediately. Do not collect 200Ꝟ if you pass through the beginning tile",
-            "Collect 100Ꝟ from each player"
-        };
+        "Collect 200Ꝟ",
+        "Collect 100Ꝟ",
+        "Place 100 on the board",
+        "Place on the board 40Ꝟ for each owned house, and 115Ꝟ for each owned hotel",
+        "Travel to the nearest utility (electric company or water works). Collect 200Ꝟ if you pass through the beginning tile",
+        "Advance to the beginning tile",
+        "Travel to jail immediately. Do not collect 200Ꝟ if you pass through the beginning tile",
+        "Collect 100Ꝟ from each player"
+    };
 
-        // Randomly selectn
-        Random random = new Random();
-        int randomIndex = random.Next(communityCardAction.Count);
-        string selectedAction = communityCardAction[randomIndex];
+    // Randomly select
+    Random random = new Random();
+    int randomIndex = random.Next(communityCardAction.Count);
+    string selectedAction = communityCardAction[randomIndex];
 
-       
-        PerformChanceCardAction(player, selectedAction);
-    }
+    PerformCommChanceCardAction(player, selectedAction, players);
+}
 
-    private void PerformChanceCardAction(Player player, string action)
+
+private void PerformCommChanceCardAction(Player player, string action, List<Player> players)
     {
         switch (action)
         {
@@ -68,6 +73,7 @@ public class CommunityChestCardTile: Tile
             case "Travel to the nearest utility (electric company or water works). Collect 200Ꝟ if you pass through the beginning tile":
              player.goToNeartestUtiliy();
              
+             
             
                 break; 
 
@@ -81,10 +87,23 @@ public class CommunityChestCardTile: Tile
 
 
             case "Collect 100Ꝟ from each player":
-               break;       
+             foreach (Player otherPlayer in players)
+             {
+                if (otherPlayer != player)
+                {
+                    otherPlayer.PayToOtherPlayer(player, 100);
+                    Console.WriteLine($"{player.Name} collected 100Ꝟ from {otherPlayer.Name}.");
+                }
+             }
+
+             
+            break;
+            
+              
+
             default:
-                Console.WriteLine($"Unhandled chance card action: {action}");
-                break;
-        }
+            Console.WriteLine($"Unhandled chance card action: {action}");
+             break;
+            }
     }
 }

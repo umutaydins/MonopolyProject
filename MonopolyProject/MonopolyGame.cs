@@ -84,6 +84,55 @@ class MonopolyProject
         Console.WriteLine($"{players[0].Name} wins the game!");
     }
 
+   static void PlayerOrder(List<Player> players)
+{
+    // Roll dice for each player
+    foreach (Player player in players)
+    {
+        player.RollDiceForOrder();
+    }
+
+    // Check if there are duplicate dice values
+    while (HasDuplicateDiceValues(players))
+    {
+        Console.WriteLine("Duplicate dice values found. Re-rolling...");
+
+        // Re-roll dice for players with duplicate values
+        foreach (Player player in players.Where(p => IsDuplicateDiceValue(p, players)))
+        {
+            player.RollDice();
+        }
+    }
+
+    // Sort players based on their dice values in descending order
+    players.Sort((p1, p2) => p2.LastDiceValue.CompareTo(p1.LastDiceValue));
+
+    Console.WriteLine("Players sorted based on dice values:");
+    foreach (Player player in players)
+    {
+        Console.WriteLine($"{player.Name}: {player.LastDiceValue}");
+    }
+}
+static bool IsDuplicateDiceValue(Player player, List<Player> players)
+{
+    return players.Count(p => p.LastDiceValue == player.LastDiceValue) > 1;
+}
+static bool HasDuplicateDiceValues(List<Player> players)
+{
+    HashSet<int> uniqueValues = new HashSet<int>();
+
+    foreach (Player player in players)
+    {
+        if (!uniqueValues.Add(player.LastDiceValue))
+        {
+            return true; // Duplicate value found
+        }
+    }
+
+    return false; // No duplicate values found
+}
+    
+
     static string GetPlayerName(List<Player> existingPlayers, int playerNumber)
     {
         while (true)

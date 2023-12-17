@@ -19,6 +19,7 @@ public class Player
     //public int TrainStations { get; set; }
     public bool IsInJail { get; set; }
     public int TurnsInJail { get; set; }
+    public int LastDiceValue { get; private set; }
 
     public int HouseCount { get; private set; }
     public int HotelCount { get; private set; }
@@ -195,6 +196,13 @@ public class Player
         // Şu an için sadece ev sayısının bir sınıra ulaşıp ulaşmadığını kontrol ediyorum
         return propertyTile.HouseCount < 4; // Örneğin maksimum 4 ev olabilir
     }
+
+      public int RollDiceForOrder()
+{
+    LastDiceValue = RollDie();
+    Console.WriteLine($"{Name} rolled a {LastDiceValue}.");
+    return LastDiceValue;
+}
 
 
     public void DrawCard()
