@@ -220,5 +220,9 @@ public class Property : Tile, IOwnable
     {
         TileOwnershipManager ownershipManager = new TileOwnershipManager();
         ownershipManager.PurchaseTile(this, buyer);
+
+        if (this.Owner == buyer){
+            Owner.playerPropertyCardList.Add(this);
+        }
     }
 }

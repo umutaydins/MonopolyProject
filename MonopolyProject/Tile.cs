@@ -25,7 +25,7 @@ public abstract class Tile
 
     public void Display(string route)
     {
-        Console.Write("|" + Name + "|" + route);
+        Console.Write($"|{Name}|" + route);
     }
 
     public virtual string ToString()
@@ -34,10 +34,10 @@ public abstract class Tile
         string verticalLine = "|";
 
         string result = $"+{horizontalLine}+\n" +
-                        $"{verticalLine,2} Name: {Name, 15}{verticalLine, 5}\n" +
-                        $"{verticalLine}{horizontalLine}{verticalLine, 5}\n" +
-                        $"{verticalLine,2} Description: {Description, 13}{verticalLine, 5}\n" +
-                        $"{verticalLine}{horizontalLine}{verticalLine, 5}";
+                        $"{verticalLine,2} Name: {Name, 15}{verticalLine, 3}\n" +
+                        $"{verticalLine}{horizontalLine}\n" +
+                        //$"{verticalLine,2} Description: {Description, 13}{verticalLine, 5}\n" +
+                        $"{verticalLine}{horizontalLine}";
 
         return result;
     }

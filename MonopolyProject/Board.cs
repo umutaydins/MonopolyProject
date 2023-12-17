@@ -5,11 +5,9 @@ using System.Drawing;
 public class Board
 {
     private static Board instance;
-    public int  cash{ get; set; }
+    public int cash { get; set; }
     public List<Tile> Tiles { get; set; }
 
-
-    // SİMDİLİK property yaptım şans kartları ve diğer kartlar girince ortak bir şey yaparız
     private Board()
     {
         // Initialize the board with tiles
@@ -97,22 +95,34 @@ public class Board
 
     public void DisplayBoard(List<Player> players)
     {
+        ConsoleColor[] playerColors = { ConsoleColor.Green, ConsoleColor.Blue, ConsoleColor.Red, ConsoleColor.Yellow, ConsoleColor.Magenta };
+
         int counter = 0;
         Console.WriteLine();
-        for (int i= 0; i < Tiles.Count;i++)
+
+        for (int i = 0; i < Tiles.Count; i++)
         {
-            foreach (Player player in players)
+            List<Player> playersAtPosition = players.Where(player => player.Position == i).ToList();
+
+            if (playersAtPosition.Count > 0)
             {
-                if (i == player.Position)
+                foreach (Player player in playersAtPosition)
                 {
-                    Console.ForegroundColor = ConsoleColor.Green;
+                    int colorIndex = players.IndexOf(player) % playerColors.Length;
+                    Console.ForegroundColor = playerColors[colorIndex];
                     Console.Write(player.Name + " ");
                 }
             }
-            Tiles[i].Display("-->");
+            else
+            {
+                Console.Write("  ");
+            }
+
+            Tiles[i].Display("");
             Console.ResetColor();
         }
     }
+
 
 
 

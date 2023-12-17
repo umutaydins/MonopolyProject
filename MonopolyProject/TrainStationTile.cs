@@ -5,7 +5,6 @@ public class TrainStation : Tile, IOwnable
     public int Rent { get; set; }
     public int Price { get; set; }
     public Player Owner { get; set; }
-    public int StationsOwned { get; set; }
     public bool IsBuyDecisionMade { get; set; }
 
     public TrainStation(int id, string name, string description, int price)
@@ -14,40 +13,77 @@ public class TrainStation : Tile, IOwnable
         this.Rent = 50;
         this.Price = price;
         this.Owner = null;
-        this.StationsOwned = 0;
+
     }
 
-    public void IncrementStationsOwned()
-    {
-        StationsOwned++;
-    }
+
 
     public override void LandOn(Player player)
+
     {
-        if (Owner != player)
+        if (!IsBuyDecisionMade)
         {
-            int totalRent = CalculateRent();
-            Console.WriteLine($"Player {player.Name} pays ${totalRent} rent to {Owner.Name}.");
-            player.PayToOtherPlayer(Owner, totalRent);
+
+
+            if (IsOwned() && Owner != player)
+            {
+                int totalRent = CalculateRent();
+                Console.WriteLine($"Player {player.Name} pays ${totalRent} rent to {Owner.Name}.");
+                player.PayToOtherPlayer(Owner, totalRent);
+
+            }
+            else if (IsOwned() && Owner == player)
+            {
+                Console.WriteLine("This property is yours!");
+            }
         }
+
+        else
+        {
+            IsBuyDecisionMade = false;
+
+        }
+
+
+
     }
+
+
+
 
     public bool IsOwned() { return Owner != null; }
 
     private int CalculateRent()
     {
+        int TrainStationCount = Owner.getTrainStationsCardCount();
 
-        return Rent * Owner.TrainStations; // sonradan düzenlenecek
+        return Rent * TrainStationCount;
     }
     public override string ToString()
     {
-        return base.ToString();
+        string horizontalLine = new string('-', 30);
+        string verticalLine = "|";
+
+
+        string result = base.ToString(); // Use the common part from the base class
+
+
+
+        result += $"\n{verticalLine,2} Price: {Price,13}\n" +
+                  $"{verticalLine,2} Owner: {(Owner != null ? Owner.Name : "Does not have owner"),11}\n" +
+                  $"{verticalLine}{horizontalLine}";
+
+
+        return result;
     }
 
     public void Purchase(Player buyer)
     {
         TileOwnershipManager ownershipManager = new TileOwnershipManager();
         ownershipManager.PurchaseTile(this, buyer);
-        buyer.TrainStations++;
+        if (this.Owner == buyer)
+        {
+            Owner.playerTrainStationCardList.Add(this);
+        }
     }
 }

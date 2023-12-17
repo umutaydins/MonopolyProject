@@ -66,7 +66,7 @@ class MonopolyProject
                 Console.ReadLine();
                 Board.Instance.DisplayBoard(players);
                 player.Move(Board.Instance);
-                Console.Clear();
+                //Console.Clear();
                 CheckBankruptcy(players);
 
                 if (Board.Instance.CheckGameStatus(players))

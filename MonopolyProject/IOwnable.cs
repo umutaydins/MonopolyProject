@@ -22,6 +22,7 @@ public class TileOwnershipManager
                 buyer.PayToBank(price);
                 tile.Owner = buyer;
                 Console.WriteLine($"{buyer.Name} has purchased {tile.GetType().Name} '{tile.Name}' for {price} TL.");
+                
             }
             else
             {
