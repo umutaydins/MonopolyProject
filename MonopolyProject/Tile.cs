@@ -1,18 +1,11 @@
 using System;
 using System.Collections.Generic;
+// Abstract base class for representing tiles on the game board
 public abstract class Tile
 {
     public int Id { get; }
-    public string Name { get; }
+    public string Name { get; set; }
     public string Description { get; set; }
-
-     /*public string GetName()
-    {
-        return Name;
-    }*/
-
-    
-    
 
     protected Tile(int id, string name, string description)
     {
@@ -20,7 +13,8 @@ public abstract class Tile
         Name = name;
         Description = description;
     }
-
+    // Abstract method to be implemented by derived classes
+    // Represents the action when a player lands on this tile
     public abstract void LandOn(Player player);
 
     public void Display(string route)
@@ -36,7 +30,7 @@ public abstract class Tile
         string result = $"+{horizontalLine}+\n" +
                         $"{verticalLine,2} Name: {Name, 15}{verticalLine, 3}\n" +
                         $"{verticalLine}{horizontalLine}\n" +
-                        //$"{verticalLine,2} Description: {Description, 13}{verticalLine, 5}\n" +
+                        $"{verticalLine,2} Description: {Description, 13}{verticalLine, 5}\n" +
                         $"{verticalLine}{horizontalLine}";
 
         return result;

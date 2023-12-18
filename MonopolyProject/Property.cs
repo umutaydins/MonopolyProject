@@ -7,13 +7,23 @@ public class Property : Tile, IOwnable
     public int Price { get; set; }
     public Player Owner { get; set; }
     private string Color { get; set; }
-    public int HouseCount { get; private set; } // New property to track the number of houses
-    public int HotelCount { get; private set; } 
+    public int HouseCount { get; private set; }
+    public int HotelCount { get; private set; }
     public bool IsBuyDecisionMade { get; set; }
     public bool HasHotel { get; private set; }
 
 
 
+
+    public Property(int id, string name, string description, int price, Player owner, string color)
+        : base(id, name, description)
+    {
+        this.Price = price;
+        this.Owner = owner;
+        this.Color = color;
+        this.HouseCount = 0;
+        this.HotelCount = 0;
+    }
 
 
 
@@ -23,21 +33,24 @@ public class Property : Tile, IOwnable
         {
             if (IsOwned() && Owner != player)
             {
+                // Calculate and charge rent to the player
                 int rent = CalculateRent();
                 player.PayToOtherPlayer(Owner, rent);
             }
             else if (IsOwned() && Owner == player)
             {
+                // Check if the player wants to build a house or hotel
                 if (HasHotel)
                 {
                     Console.WriteLine("This property has a hotel. You cannot build houses or hotels.");
                 }
                 else
                 {
+                    // Display options for building a house or hotel
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("This property is yours. Do you want to build a house or hotel?\n !You can build hotel only after you build 4 house!");
                     int housePrice = CalculateMoneyForBuildingHouse();
-                    int hotelPrice= CalculateMoneyForBuildingHotel();
+                    int hotelPrice = CalculateMoneyForBuildingHotel();
                     Console.WriteLine($"House price : {housePrice}TL\nHotel price: {hotelPrice}TL");
                     Console.ResetColor();
                     string input = Console.ReadLine();
@@ -57,8 +70,6 @@ public class Property : Tile, IOwnable
             // Reset the flag for the next time the player lands on this tile
             IsBuyDecisionMade = false;
 
-            // Your additional logic for when the player has decided to buy
-            // For example, you might want to display a message indicating the purchase
             Console.WriteLine($"{player.Name} has decided to buy {Name}.");
         }
     }
@@ -80,17 +91,7 @@ public class Property : Tile, IOwnable
         }
     }
 
-    public Property(int id, string name, string description, int price, Player owner, string color)
-        : base(id, name, description)
-    {
-        this.Price = price;
-        this.Owner = owner;
-        this.Color = color;
-        this.HouseCount = 0;
-        this.HotelCount=0;
-    }
-
-
+    // Check if the property is owned by a player
     public bool IsOwned() { return Owner != null; }
 
     public void BuildHouse()
@@ -109,7 +110,7 @@ public class Property : Tile, IOwnable
         }
     }
 
-
+    // Build a house or hotel based on player input
     public void BuildHouseOrHotel()
     {
         if (CanBuildHouse())
@@ -118,7 +119,7 @@ public class Property : Tile, IOwnable
             Console.WriteLine($"A house is being built....");
             Console.ResetColor();
             BuildHouse();
-        
+
         }
         else if (CanBuildHotel())
 
@@ -127,12 +128,12 @@ public class Property : Tile, IOwnable
             Console.WriteLine($"A hotel is being built....");
             Console.ResetColor();
             BuildHotel();
-            
+
         }
 
     }
 
-
+    // Check if a house can be built on the property
     private bool CanBuildHouse()
     {
         return HouseCount < 4; // Example: Maximum of 4 houses allowed
@@ -202,8 +203,8 @@ public class Property : Tile, IOwnable
 
         string result = base.ToString(); // Use the common part from the base class
 
-        result += $"\n| House Count: {HouseCount,9} |";
-        result += $"\n| Hotel Count: {HouseCount,9} |";
+        result += $"\n{verticalLine,2} House Count: {HouseCount,9} |";
+        result += $"\n{verticalLine,2} Hotel Count: {HouseCount,9} |";
 
 
 
@@ -215,13 +216,14 @@ public class Property : Tile, IOwnable
 
         return result;
     }
-
+    // Method to handle the purchase of the property by a player
     public void Purchase(Player buyer)
     {
         TileOwnershipManager ownershipManager = new TileOwnershipManager();
         ownershipManager.PurchaseTile(this, buyer);
 
-        if (this.Owner == buyer){
+        if (this.Owner == buyer)
+        {
             Owner.playerPropertyCardList.Add(this);
         }
     }

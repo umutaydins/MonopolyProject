@@ -6,37 +6,31 @@ public class Player
 {
     public string Name { get; }
     public int Money { get; private set; }
-
     public int Position { get; set; }
-
     public Tile CurrentTile { get; private set; }
-
-
+    public bool IsInJail { get; set; }
+    public int TurnsInJail { get; set; }
+    public int LastDiceValue { get; private set; }
+    public int HouseCount { get; private set; }
+    public int HotelCount { get; private set; }
+    // Lists to store different types of cards owned by the player
     public List<UtilityTile> playerUtilityCardList { get; set; } = new List<UtilityTile>();
     public List<TrainStation> playerTrainStationCardList { get; set; } = new List<TrainStation>();
     public List<Property> playerPropertyCardList { get; set; } = new List<Property>();
 
-    //public int TrainStations { get; set; }
-    public bool IsInJail { get; set; }
-    public int TurnsInJail { get; set; }
-    public int LastDiceValue { get; private set; }
-
-    public int HouseCount { get; private set; }
-    public int HotelCount { get; private set; }
 
 
-
+    // Reference to the game board
     private readonly Board board;
 
 
     public Player(string name, Board board)
     {
         Name = name;
-        Money = 20000;
         Money = 400;
         Position = 0;
         IsInJail = false;
-        TurnsInJail = 0;
+        TurnsInJail = 2;
         HouseCount = 0;
         HotelCount = 0;
         this.board = board; // Store the reference to the Board
@@ -44,24 +38,24 @@ public class Player
     }
 
 
-    // Player sınıfındaki RollDice metodu
+    // Roll a single die
     private int RollDie()
     {
         Random random = new Random();
         return random.Next(1, 7);
     }
 
-    // Player sınıfındaki RollDice metodu
+    // Roll two dice and return the total
     public int RollDice()
     {
         int dice1 = RollDie();
         int dice2 = RollDie();
 
-        Console.WriteLine($"{Name} rolled a {dice1} and {dice2}.");
+        Console.WriteLine($"\n{Name} rolled a {dice1} and {dice2}.");
         return dice1 + dice2;
     }
 
-
+    // Attempt to buy the current tile if it is ownable
     public void TryToBuyTile()
     {
         if (CurrentTile is IOwnable ownableTile)
@@ -97,24 +91,35 @@ public class Player
     }
 
 
-
+    // Move the player on the board
     public void Move(Board board)
     {
-        int steps = RollDice();
-        Position = (Position + steps) % board.Size;
+        // Check if the player is in jail; if so, they can't move
+        if (!IsInJail)
+        {
+            int steps = RollDice();
+            Position = (Position + steps) % board.Size;
 
-        Console.WriteLine($"\n{Name} rolled a {steps} and moved to position {Position} on the board.");
+            Console.WriteLine($"\n{Name} rolled a {steps} and moved to position {Position} on the board.");
 
-        CurrentTile = board.Tiles[Position];
-        Console.WriteLine($"\n{Name} is here: \n" + CurrentTile.ToString());
-        DisplayAssets();
-        TryToBuyTile();
-        CurrentTile.LandOn(this);
-
+            CurrentTile = board.Tiles[Position];
+            Console.WriteLine($"\n{Name} is here: \n" + CurrentTile.ToString());
+            DisplayAssets();
+            TryToBuyTile();
+            CurrentTile.LandOn(this);
+        }
+        else
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"{Name} is in jail and cannot move.");
+            Console.ResetColor();
+            this.EndTurn();
+        }
 
         Console.WriteLine($"{Name}'s turn is complete.\n----------------------------------------");
     }
 
+    // Display player's assets, including properties, utility cards, and train station cards
     public void DisplayAssets()
 
     {
@@ -150,25 +155,21 @@ public class Player
     }
 
 
-
+    // Build a house on the current property
     public void BuildHouse()
     {
-        // Oyuncunun bulunduğu karenin bir mülk olup olmadığını kontrol et
+        // Check if the current tile is a property
         if (CurrentTile is Property propertyTile)
         {
-            // Mülk sahibi ise ve ev inşa edebilecek durumdaysa devam et
+            // Check if the player is the owner of the property and can build a house
             if (propertyTile.Owner == this && CanBuildHouse(propertyTile))
             {
-                // Evin fiyatı
-                int housePrice = 50; // Bu değeri oyunun kurallarına göre ayarlayın
+                int housePrice = 50;
 
-                // Oyuncunun ev inşa etmek için yeterli parası var mı kontrol et
+                // Check if the player has enough money to build a house
                 if (Money >= housePrice)
                 {
-                    // Ev inşa et
                     propertyTile.BuildHouse();
-
-                    // Oyuncunun parasını azalt
                     PayToBank(housePrice);
 
                     Console.WriteLine($"{Name} has built a house on {propertyTile.Name}. Remaining money: {Money} TL");
@@ -188,21 +189,18 @@ public class Player
             Console.WriteLine($"{Name} is not on a property tile. Cannot build a house.");
         }
     }
+    // Check if the player can build a house on the given property
     private bool CanBuildHouse(Property propertyTile)
     {
-        // Burada ev inşa etmek için gerekli diğer kontrolleri yapabilirsiniz
-        // Örneğin, aynı renkteki tüm mülklerin aynı seviyede olup olmadığını kontrol etmek
-        // veya başka özel durumları kontrol etmek için kullanılabilir.
-        // Şu an için sadece ev sayısının bir sınıra ulaşıp ulaşmadığını kontrol ediyorum
-        return propertyTile.HouseCount < 4; // Örneğin maksimum 4 ev olabilir
+        return propertyTile.HouseCount < 4;
     }
-
-      public int RollDiceForOrder()
-{
-    LastDiceValue = RollDie();
-    Console.WriteLine($"{Name} rolled a {LastDiceValue}.");
-    return LastDiceValue;
-}
+    // Roll a die for determining player order
+    public int RollDiceForOrder()
+    {
+        LastDiceValue = RollDie();
+        Console.WriteLine($"{Name} rolled a {LastDiceValue}.");
+        return LastDiceValue;
+    }
 
 
     public void DrawCard()
@@ -211,12 +209,12 @@ public class Player
     }
 
 
-
+    // Send the player to jail
     public void GoToJail(Board board)
     {
         Console.WriteLine($"{Name} goes to jail!");
         IsInJail = true;
-        TurnsInJail = 2; // Number of turns the player should skip in jail
+        TurnsInJail = 3; // Number of turns the player should skip in jail
 
         // Set the player's position to the jail tile
         Position = 10;
@@ -228,7 +226,6 @@ public class Player
         // Decrease the TurnsInJail counter
         if (IsInJail)
         {
-            TurnsInJail--;
 
             // Check if the player is still in jail or if their turns are up
             if (TurnsInJail == 0)
@@ -238,8 +235,11 @@ public class Player
             }
             else
             {
+                TurnsInJail--;
                 Console.WriteLine($"{Name} is still in jail. Turns remaining: {TurnsInJail}");
+
             }
+
         }
 
 
@@ -248,7 +248,7 @@ public class Player
     {
         Console.WriteLine($"{Name} payed {amount}TL to {player.Name}!");
         Money = Money - amount;
-        player.Money = player.Money + amount; // Methodlarla da yapulabilir 
+        player.Money = player.Money + amount; 
 
     }
 
@@ -278,6 +278,7 @@ public class Player
         Money -= amount;
 
     }
+    // Move to the nearest utility tile
     public void goToNeartestUtiliy()
     {
 
@@ -300,7 +301,6 @@ public class Player
             }
         }
 
-        // Move to the nearest utility tile
         Position = nearestUtilityIndex;
         CurrentTile = board.Tiles[nearestUtilityIndex];
 

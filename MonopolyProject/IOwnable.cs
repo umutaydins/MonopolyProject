@@ -1,3 +1,4 @@
+// Interface representing an ownable item, such as a property or tile
 public interface IOwnable
 {
     int Id { get; }
@@ -6,12 +7,14 @@ public interface IOwnable
     Player Owner { get; set; }
     bool IsOwned();
     void Purchase(Player buyer);
+    // Property to track whether the buy decision is made for the item
     public bool IsBuyDecisionMade { get; set; }
 }
 
-
+// Manager class to handle the purchase of ownable items
 public class TileOwnershipManager
 {
+    // Method to handle the purchase of an ownable item by a player
     public void PurchaseTile(IOwnable tile, Player buyer)
     {
         if (!tile.IsOwned())

@@ -5,9 +5,9 @@ using System.Drawing;
 public class Board
 {
     private static Board instance;
-    public int cash { get; set; }
+    public int cash { get; set; }// Current cash available on the board
     public List<Tile> Tiles { get; set; }
-
+    public int Size { get; }
     private Board()
     {
         // Initialize the board with tiles
@@ -20,6 +20,7 @@ public class Board
     {
         get
         {
+            // Singleton pattern to ensure only one instance of Board exists
             if (instance == null)
             {
                 instance = new Board();
@@ -28,66 +29,65 @@ public class Board
         }
     }
 
-    public int Size { get; }
 
 
 
-    Tile BeginningTile = new DefaultTiles(0, "Beginning Tile", "You will earn 200TL."); // Baslangıc tile'ı yapılacak
-    Tile kasimpasa = new Property(1, "kasimpasa", "Description", 60, null, "Brown");
-    Tile communityChestCardTile = new CommunityChestCardTile(2, "Community Chest Card", "Description");
-    Tile dolapdere = new Property(3, "dolapdere", "description", 60, null, "Brown");
+
+    Tile BeginningTile = new DefaultTiles(0, "Beginning Tile", "You will earn 200TL."); // Start of the board
+    Tile kasimpasa = new Property(1, "Kasimpasa", "Property", 60, null, "Brown");// Property tile example
+    Tile communityChestCardTile = new CommunityChestCardTile(2, "Community Chest Card", "Draw a card");
+    Tile dolapdere = new Property(3, "Dolapdere", "Property", 60, null, "Brown");
     Tile incomeTaxTile = new DefaultTiles(4, "Income Tax Tile", "Pay 200TL to board ");
 
-    Tile haydarPasaStation = new TrainStation(5, "Haydarpasa Istasyonu", "Description", 50);// simdilik 50 yazdım kullanıcının istasyon sayısına göre ayaralanacak
+    Tile haydarPasaStation = new TrainStation(5, "Haydarpasa Station", "Train Station", 50);// simdilik 50 yazdım kullanıcının istasyon sayısına göre ayaralanacak
 
-    Tile sultanahmet = new Property(6, "sultanahmet", "description", 60, null, "Blue");
-    Tile chanceCardTile = new ChanceCardTile(7, "ChanceCardTile", "none");
-    Tile karakoy = new Property(8, "karakoy", "description", 60, null, "Blue");
+    Tile sultanahmet = new Property(6, "Sultanahmet", "Property", 60, null, "Blue");
+    Tile chanceCardTile = new ChanceCardTile(7, "Chance CardTile ", "Draw a card");
+    Tile karakoy = new Property(8, "Karakoy", "Property", 60, null, "Blue");
 
-    Tile sirkeci = new Property(9, "sirkeci", "description", 60, null, "Blue");
-
-    // PRISON VISITOR TİLE
+    Tile sirkeci = new Property(9, "Sirkeci", "Property", 60, null, "Blue");
 
     Tile prison = new DefaultTiles(10, "Prison", "Welcome to prison!");
 
-    Tile beyoglu = new Property(11, "beyoglu", "description", 60, null, "Pink");
+    Tile beyoglu = new Property(11, "Beyoglu", "Property", 60, null, "Pink");
     Tile electricCompany = new UtilityTile(12, "Electric Company", "Description", 50);
-    Tile taksim = new Property(13, "taksim", "description", 60, null, "Pink");
-    Tile besiktas = new Property(14, "besiktas", "description", 60, null, "Pink");
-    Tile bPasaStation = new TrainStation(15, "b Istasyonu", "Description", 50);
+    Tile taksim = new Property(13, "Taksim", "Property", 60, null, "Pink");
+    Tile besiktas = new Property(14, "Besiktas", "Property", 60, null, "Pink");
+    Tile taksimStation = new TrainStation(15, "Taksim Train Station", "Train Station", 50);
 
-    Tile harbiye = new Property(16, "harbiye", "description", 60, null, "Orange");
+    Tile harbiye = new Property(16, "Harbiye", "Property", 60, null, "Orange");
 
-    Tile sisli = new Property(18, "sisli", "description", 60, null, "Orange");
-    Tile mecidiyekoy = new Property(19, "mecidiyekoy", "description", 60, null, "Orange");
+    Tile sisli = new Property(18, "Sisli", "Property", 60, null, "Orange");
+    Tile mecidiyekoy = new Property(19, "Mecidiyekoy", "Property", 60, null, "Orange");
     Tile freeParkingTile = new DefaultTiles(20, "Free Parking Tile", "Collect all the money board.");
-    Tile erenkoy = new Property(21, "erenkoy", "description", 60, null, "Red");
-    Tile bostanci = new Property(23, "bostanci", "description", 60, null, "Red");
-    Tile caddebostan = new Property(24, "caddebostan", "description", 60, null, "Red");
-    Tile aStation = new TrainStation(25, "a Istasyonu", "Description", 50);
-    Tile nisantasi = new Property(26, "nisantasi", "description", 60, null, "Yellow");
-    Tile macka = new Property(27, "macka", "description", 60, null, "Yellow");
+    Tile erenkoy = new Property(21, "Erenkoy", "Property", 60, null, "Red");
+    Tile bostanci = new Property(23, "Bostanci", "Property", 60, null, "Red");
+    Tile caddebostan = new Property(24, "Caddebostan", "Property", 60, null, "Red");
+    Tile erenkoyTrainStation = new TrainStation(25, "Erenkoy Station", "Train Station", 50);
+    Tile nisantasi = new Property(26, "Nisantasi", "Property", 60, null, "Yellow");
+    Tile macka = new Property(27, "Macka", "Property", 60, null, "Yellow");
     Tile waterWorks = new UtilityTile(28, " Water Works", "Description", 50);
-    Tile tesvikiye = new Property(29, "tesvikiye", "description", 60, null, "Yellow");
+    Tile tesvikiye = new Property(29, "Tesvikiye", "description", 60, null, "Yellow");
     Tile goToPrison = new JailTile(30, "Prison Tile", "Go to prison!");
-    Tile levent = new Property(31, "levent", "description", 60, null, "Green");
-    Tile etiler = new Property(32, "etiler", "description", 60, null, "Green");
+    Tile levent = new Property(31, "Levent", "Property", 60, null, "Green");
+    Tile etiler = new Property(32, "Etiler", "Property", 60, null, "Green");
     // (33) Chance card tile, no need to create again
 
-    Tile bebek = new Property(34, "bebek", "description", 60, null, "Green");
+    Tile bebek = new Property(34, "Bebek", "Property", 60, null, "Green");
     Tile sirkeciStation = new TrainStation(35, "Sirkeci Istasyonu", "Description", 50);
     // (36) Chance card tile, no need to create again
-    Tile tarabya = new Property(37, "tarabya", "description", 60, null, "DarkBlue");
+    Tile tarabya = new Property(37, "Tarabya", "Property", 60, null, "DarkBlue");
     Tile luxuryTaxTile = new DefaultTiles(38, "Luxury Tax Tile", "Pay 150TL to board.");
-    Tile yenikoy = new Property(39, "yenikoy", "description", 60, null, "DarkBlue");
+    Tile yenikoy = new Property(39, "Yenikoy", "Property", 60, null, "DarkBlue");
 
     public void InitializeBoard()
     {
         // Initialize the list of tiles
         Tiles = new List<Tile>
         {
-            BeginningTile,kasimpasa, communityChestCardTile, dolapdere, incomeTaxTile,haydarPasaStation,sultanahmet, chanceCardTile, karakoy,  sirkeci,prison, beyoglu,electricCompany, taksim, besiktas, bPasaStation, harbiye,communityChestCardTile, sisli,
-            mecidiyekoy,freeParkingTile, erenkoy,chanceCardTile, bostanci, caddebostan,aStation, nisantasi, macka, waterWorks,tesvikiye,goToPrison,levent,etiler, communityChestCardTile,bebek, sirkeciStation,chanceCardTile,tarabya, luxuryTaxTile,yenikoy
+            //Add all the tiles to the board in the desired order
+            BeginningTile,kasimpasa, communityChestCardTile, goToPrison, incomeTaxTile,haydarPasaStation,sultanahmet, chanceCardTile, goToPrison,  sirkeci,prison, beyoglu,electricCompany, taksim, besiktas, taksimStation, harbiye,communityChestCardTile, sisli,
+            mecidiyekoy,freeParkingTile, erenkoy,chanceCardTile, bostanci, caddebostan,erenkoyTrainStation, nisantasi, macka, waterWorks,tesvikiye,goToPrison,levent,etiler, communityChestCardTile,bebek, sirkeciStation,chanceCardTile,tarabya, luxuryTaxTile,yenikoy
         };
 
 
@@ -96,16 +96,17 @@ public class Board
     public void DisplayBoard(List<Player> players)
     {
         ConsoleColor[] playerColors = { ConsoleColor.Green, ConsoleColor.Blue, ConsoleColor.Red, ConsoleColor.Yellow, ConsoleColor.Magenta };
-
         int counter = 0;
         Console.WriteLine();
 
+        // Display the board and players' positions on it
         for (int i = 0; i < Tiles.Count; i++)
         {
             List<Player> playersAtPosition = players.Where(player => player.Position == i).ToList();
 
             if (playersAtPosition.Count > 0)
             {
+                // Display the players at this position with their respective colors
                 foreach (Player player in playersAtPosition)
                 {
                     int colorIndex = players.IndexOf(player) % playerColors.Length;
@@ -128,6 +129,7 @@ public class Board
 
     public bool CheckGameStatus(List<Player> players)
     {
+        // Check if only one player is left, indicating the end of the game
         return players.Count == 1;
     }
 

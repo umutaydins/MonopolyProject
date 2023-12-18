@@ -10,40 +10,44 @@ public class DefaultTiles : Tile
     public DefaultTiles(int id, string name, string description)
         : base(id, name, description)
     {
-       // this.fee = fee;
-       // fee kısmını bizim vermemize gerek yok 
+
     }
 
-    
+
 
     public override void LandOn(Player player)
 
     {
-        if(base.Name=="Income Tax Tile"){
-
+        // Check the type of the tile and perform specific actions
+        if (base.Name == "Income Tax Tile")
+        {
+            // Deduct money from the player and add to the board's cash
             player.deductMoney(200);
-            Board.Instance.cash +=200; 
+            Board.Instance.cash += 200;
 
             Console.WriteLine($"Board has: {Board.Instance.cash}TL");
 
         }
 
-        else if(base.Name=="Luxury Tax Tile"){
-            
-            
+        else if (base.Name == "Luxury Tax Tile")
+        {
+
+
             player.deductMoney(150);
-            Board.Instance.cash +=150; 
+            Board.Instance.cash += 150;
             Console.WriteLine($"Board has: {Board.Instance.cash}TL");
         }
 
-        else if(base.Name=="Free Parking Tile"){
-            
+        else if (base.Name == "Free Parking Tile")
+        {
+            // Earn money for the player from the board's cash and reset board's cash
             player.EarnMoney(Board.Instance.cash);
             Board.Instance.cash = 0;
             Console.WriteLine($"Board has: {Board.Instance.cash}TL");
         }
-        else if (Name=="Beginning Tile"){
-            
+        else if (Name == "Beginning Tile")
+        {
+            // Earn money for the player
             player.EarnMoney(200);
 
         }

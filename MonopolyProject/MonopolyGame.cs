@@ -55,10 +55,8 @@ class MonopolyProject
                 // Check if the player is in jail
                 if (player.IsInJail)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"{player.Name} is in jail and cannot play this turn.");
-                    Console.ResetColor();
-                    player.TurnsInJail++;
+
+                    player.Move(Board.Instance);
                     continue; // Skip the rest of the turn for players in jail
                 }
 
