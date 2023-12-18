@@ -4,6 +4,7 @@ using System.Drawing;
 
 class MonopolyProject
 {
+    public static List<Player> players = new List<Player>();
     static void Main()
     {
         int playerCount = 0;
@@ -35,7 +36,7 @@ class MonopolyProject
         }
 
         // Create player list
-        List<Player> players = new List<Player>();
+        // List<Player> players = new List<Player>();
         Board.Instance.InitializeBoard();
 
         for (int i = 1; i <= playerCount; i++)

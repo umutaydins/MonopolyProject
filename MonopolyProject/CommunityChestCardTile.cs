@@ -4,7 +4,7 @@ using System.Drawing;
 public class CommunityChestCardTile: Tile
 
 {
-    public static List<Player> players;
+        public static List<Player> players= MonopolyProject.players;
   
     public CommunityChestCardTile(int id, string name, string description) : base(id, name, description)
     {
@@ -56,6 +56,8 @@ private void PerformCommChanceCardAction(Player player, string action, List<Play
                 Console.WriteLine($"{player.Name} collected 100Ꝟ.");
                 break;
             case "Place 100 on the board":
+                            player.PayToBank(100);
+
 
             
                 break;

@@ -2,7 +2,7 @@ using System;
 using System.Drawing;
 public class ChanceCardTile : Tile
 {
-        public static List<Player> players;
+        public static List<Player> players= MonopolyProject.players;
 
     public ChanceCardTile(int id, string name, string description) : base(id, name, description)
     {
@@ -21,8 +21,8 @@ public class ChanceCardTile : Tile
         {
             "Collect 150Ꝟ.",
             "Collect 50Ꝟ.",
-            "Place 150Ꝟ on the board",
-            "Place on the board 25 for each owned house, and 100Ꝟ for each owned hotel",
+            "Place 150Ꝟ on the board.",
+            "Place on the board 25 for each owned house, and 100Ꝟ for each owned hotel.",
             "Travel to the nearest train station. Collect 200Ꝟ if youpass through the beginning tile.",
             "Go back 3 tiles.",
             "Get out of jail immediately, if in jail.",
@@ -42,22 +42,22 @@ public class ChanceCardTile : Tile
     {
         switch (action)
         {
-            case "Collect 150Ꝟ":
+            case "Collect 150Ꝟ.":
                 player.EarnMoney(150);
                 Console.WriteLine($"{player.Name} collected 200Ꝟ.");
                 break;
-            case "Collect 50Ꝟ":
+            case "Collect 50Ꝟ.":
                 player.EarnMoney(50);
                 Console.WriteLine($"{player.Name} collected 100Ꝟ.");
                 break;
-            case "Place 150 on the board":
+            case "Place 150 on the board.":
                             player.PayToBank(150);
 
 
             
                 break;
 
-            case "Place on the board 25 for each owned house, and 100Ꝟ for each owned hotel":
+            case "Place on the board 25 for each owned house, and 100Ꝟ for each owned hotel.":
              if(player.HotelCount>0){
                 player.PayToBank(player.HotelCount*100);
              }    
@@ -82,8 +82,11 @@ public class ChanceCardTile : Tile
 
 
             case "Pay each player 50Ꝟ.":
+            Console.WriteLine("sddd");
+
              foreach (Player otherPlayer in players)
-             {
+             {        Console.WriteLine("sdss");
+
                 if (otherPlayer != player)
                 {
                     player.PayToOtherPlayer(otherPlayer, 50);

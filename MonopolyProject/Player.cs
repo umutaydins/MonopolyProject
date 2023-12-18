@@ -102,7 +102,7 @@ public class Player
 
             Console.WriteLine($"\n{Name} rolled a {steps} and moved to position {Position} on the board.");
 
-            CurrentTile = board.Tiles[Position];
+            CurrentTile = board.Tiles[7];
             Console.WriteLine($"\n{Name} is here: \n" + CurrentTile.ToString());
             DisplayAssets();
             TryToBuyTile();
