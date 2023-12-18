@@ -46,6 +46,9 @@ class MonopolyProject
             players.Add(player);
         }
 
+       
+        PlayerOrder(players);
+
         while (players.Count > 1)
         {
             // Inside the while loop where players take turns
@@ -83,7 +86,7 @@ class MonopolyProject
         Console.WriteLine($"{players[0].Name} wins the game!");
     }
 
-   static void PlayerOrder(List<Player> players)
+ static void PlayerOrder(List<Player> players)
 {
     // Roll dice for each player
     foreach (Player player in players)
@@ -91,20 +94,22 @@ class MonopolyProject
         player.RollDiceForOrder();
     }
 
-    // Check if there are duplicate dice values
-    while (HasDuplicateDiceValues(players))
-    {
-        Console.WriteLine("Duplicate dice values found. Re-rolling...");
-
-        // Re-roll dice for players with duplicate values
-        foreach (Player player in players.Where(p => IsDuplicateDiceValue(p, players)))
-        {
-            player.RollDice();
-        }
-    }
-
     // Sort players based on their dice values in descending order
     players.Sort((p1, p2) => p2.LastDiceValue.CompareTo(p1.LastDiceValue));
+
+    // Check for duplicate dice 
+    while (HasDuplicateDiceValues(players))
+    {
+        Console.WriteLine("Duplicate dice values found. Resolving ties...");
+
+        foreach (Player player in players)
+        {
+            player.RollDiceForOrder();
+        }
+
+        // Sort players again based on updated dice values
+        players.Sort((p1, p2) => p2.LastDiceValue.CompareTo(p1.LastDiceValue));
+    }
 
     Console.WriteLine("Players sorted based on dice values:");
     foreach (Player player in players)
@@ -112,6 +117,7 @@ class MonopolyProject
         Console.WriteLine($"{player.Name}: {player.LastDiceValue}");
     }
 }
+
 static bool IsDuplicateDiceValue(Player player, List<Player> players)
 {
     return players.Count(p => p.LastDiceValue == player.LastDiceValue) > 1;
