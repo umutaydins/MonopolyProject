@@ -56,7 +56,7 @@ private void PerformCommChanceCardAction(Player player, string action, List<Play
                 Console.WriteLine($"{player.Name} collected 100Ꝟ.");
                 break;
             case "Place 100 on the board":
-                            player.PayToBank(100);
+                 player.PayToBank(100);
 
 
             
@@ -74,6 +74,7 @@ private void PerformCommChanceCardAction(Player player, string action, List<Play
                  
             case "Travel to the nearest utility (electric company or water works). Collect 200Ꝟ if you pass through the beginning tile":
              player.goToNeartestUtiliy();
+             player.TryToBuyTile();
              
              
             
@@ -81,6 +82,8 @@ private void PerformCommChanceCardAction(Player player, string action, List<Play
 
             case "Advance to the beginning tile":
             player.SetPositionToBeginning();
+            player.EarnMoney(200);
+
                 break;
 
             case "Travel to jail immediately. Do not collect 200Ꝟ if you pass through the beginning tile":

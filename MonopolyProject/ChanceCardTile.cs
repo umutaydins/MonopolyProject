@@ -57,7 +57,7 @@ public class ChanceCardTile : Tile
             
                 break;
 
-            case "Place on the board 25 for each owned house, and 100Ꝟ for each owned hotel.":
+            case "Place on the board 25Ꝟ for each owned house, and 100Ꝟ for each owned hotel.":
              if(player.HotelCount>0){
                 player.PayToBank(player.HotelCount*100);
              }    
@@ -68,12 +68,31 @@ public class ChanceCardTile : Tile
 
                  
             case "Travel to the nearest train station. Collect 200Ꝟ if youpass through the beginning tile.":
-             player.goToNeartestUtiliy();
-            
-                break; 
+
+
+            player.goToNeartestStation();
+
+            int difference =  player.Position-Id;
+
+           // Check if the new position is negative
+            if (difference < 0)
+           {
+            player.EarnMoney(200); // Give the player $200
+                       Console.WriteLine($"{player.Name} traveled to the nearest train station and collected 200Ꝟ.");
+                       player.TryToBuyTile();
+
+           }
+           else{
+                       Console.WriteLine($"{player.Name} traveled to the nearest train station.");
+                        player.TryToBuyTile();
+           }
+
+           break;
+
 
             case "Go back 3 tiles.":
             player.Position-=3;
+            player.TryToBuyTile();
                 break;
 
             case "Get out of jail immediately, if in jail.":
@@ -82,10 +101,9 @@ public class ChanceCardTile : Tile
 
 
             case "Pay each player 50Ꝟ.":
-            Console.WriteLine("sddd");
 
              foreach (Player otherPlayer in players)
-             {        Console.WriteLine("sdss");
+             {        
 
                 if (otherPlayer != player)
                 {

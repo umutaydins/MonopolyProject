@@ -297,6 +297,7 @@ public class Player
                 {
                     minDistance = distance;
                     nearestUtilityIndex = i;
+
                 }
             }
         }
@@ -305,6 +306,36 @@ public class Player
         CurrentTile = board.Tiles[nearestUtilityIndex];
 
         Console.WriteLine($"{Name} moved to the nearest utility tile: {CurrentTile.Name}");
+
+    }
+
+      public void goToNeartestStation()
+    {
+
+        int currentPosition = Position;
+
+        int nearestStationIndex = -1;
+        int minDistance = int.MaxValue;
+
+        for (int i = 0; i < board.Tiles.Count; i++)
+        {
+            if (board.Tiles[i] is TrainStation trainStationTile)
+            {
+                int distance = (i - currentPosition + board.Size) % board.Size;
+
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    nearestStationIndex = i;
+                    
+                }
+            }
+        }
+
+        Position = nearestStationIndex;
+        CurrentTile = board.Tiles[nearestStationIndex];
+
+        Console.WriteLine($"{Name} moved to the nearest train station tile: {CurrentTile.Name}");
 
     }
     public void SetPositionToBeginning()
