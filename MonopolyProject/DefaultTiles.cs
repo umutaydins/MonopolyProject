@@ -31,8 +31,6 @@ public class DefaultTiles : Tile
 
         else if (base.Name == "Luxury Tax Tile")
         {
-
-
             player.deductMoney(150);
             Board.Instance.cash += 150;
             Console.WriteLine($"Board has: {Board.Instance.cash}TL");
@@ -48,6 +46,9 @@ public class DefaultTiles : Tile
         else if (Name == "Beginning Tile")
         {
             // Earn money for the player
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"{player.Name} passed begining tile. {player.Name} Get 200.");
+            Console.ResetColor();
             player.EarnMoney(200);
 
         }

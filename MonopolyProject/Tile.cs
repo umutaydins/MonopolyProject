@@ -17,9 +17,9 @@ public abstract class Tile
     // Represents the action when a player lands on this tile
     public abstract void LandOn(Player player);
 
-    public void Display(string route)
+    public virtual void Display(string route,int position)
     {
-        Console.Write($"|{Name}|" + route);
+        Console.Write($"|{position}-{Name}|{route}");
     }
 
     public virtual string ToString()

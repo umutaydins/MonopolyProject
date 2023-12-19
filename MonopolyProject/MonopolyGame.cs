@@ -54,21 +54,54 @@ class MonopolyProject
             // Inside the while loop where players take turns
             foreach (Player player in players.ToList())
             {
-                Console.WriteLine($"\nIt's {player.Name}'s turn.");
+                bool flag = true;
+                while (flag)
+                {
+                    // View of Board
+                    Board.Instance.DisplayBoard(players);
 
+                    Console.Write("\n\n\nIt's ");
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write(player.Name);
+                    Console.ResetColor();
+                    Console.WriteLine("'s turn.");
+
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine("1- Display properties\n2- Roll a dice");
+                    Console.ResetColor();
+                    string input = Console.ReadLine();
+                    switch (input)
+                    {
+                        case "1":
+                            Console.WriteLine("Displaying all players properties...");
+                            Console.Clear();
+                            foreach(Player propPlayer in players.ToList())
+                            {
+                                propPlayer.DisplayAssets();
+                            }
+                            Console.WriteLine("Press 'Enter' to continue...");
+                            Console.ReadLine();
+                            Console.Clear();
+                            break;
+                        case "2":
+                            flag = false;
+                            break;
+                        default:
+                            Console.Clear();
+                            Console.WriteLine("Wrong input!!!");
+                            break;
+                    }
+                }
                 // Check if the player is in jail
                 if (player.IsInJail)
                 {
-
                     player.Move(Board.Instance);
                     continue; // Skip the rest of the turn for players in jail
                 }
 
                 Console.WriteLine("Press Enter to roll the dice.");
                 Console.ReadLine();
-                Board.Instance.DisplayBoard(players);
                 player.Move(Board.Instance);
-                //Console.Clear();
                 CheckBankruptcy(players);
 
                 if (Board.Instance.CheckGameStatus(players))
@@ -174,6 +207,18 @@ static bool HasDuplicateDiceValues(List<Player> players)
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine($"{player.Name} has gone bankrupt and lost the game!");
+
+            // Bankrupt players return their properties in to the Bank
+            List<IOwnable> returnedTiles = new List<IOwnable>();
+            returnedTiles.AddRange(player.playerPropertyCardList);
+            returnedTiles.AddRange(player.playerTrainStationCardList);
+            returnedTiles.AddRange(player.playerUtilityCardList);
+
+            foreach (IOwnable tile in returnedTiles) {
+                Console.WriteLine($"{tile.Name} is returned to the bank!!");
+                tile.Owner = null;
+                tile.IsBuyDecisionMade = false;
+            }
             Console.ResetColor();
             players.Remove(player);
         }

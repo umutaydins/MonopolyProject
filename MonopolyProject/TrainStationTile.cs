@@ -59,6 +59,19 @@ public class TrainStation : Tile, IOwnable
 
         return Rent * TrainStationCount;
     }
+
+    public override void Display(string route,int position)
+    {
+        if (IsOwned())
+        {
+            Console.Write($"|{position}-{Name} Owner: {Owner.Name}|" + route);
+        }
+        else
+        {
+            base.Display(route,position);
+        }
+    }
+
     public override string ToString()
     {
         string horizontalLine = new string('-', 30);

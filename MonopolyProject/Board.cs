@@ -116,10 +116,16 @@ public class Board
             }
             else
             {
-                Console.Write("  ");
+                Console.Write(" ");
             }
-
-            Tiles[i].Display("");
+            if(i == 10 || i == 20|| i == 30 || i == 39)
+            {
+                Tiles[i].Display("\n",i);
+            }
+            else
+            {
+                Tiles[i].Display("-->",i);
+            }
             Console.ResetColor();
         }
     }

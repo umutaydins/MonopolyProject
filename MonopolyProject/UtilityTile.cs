@@ -68,9 +68,17 @@ public class UtilityTile : Tile, IOwnable
             IsBuyDecisionMade = false;
 
         }
-
-
-
+    }
+    public override void Display(string route,int position)
+    {
+        if (IsOwned())
+        {
+            Console.Write($"|{position}-{Name} Owner: {Owner.Name}|" + route);
+        }
+        else
+        {
+            base.Display(route,position);
+        }
     }
     public override string ToString()
     {

@@ -97,13 +97,17 @@ public class Player
         // Check if the player is in jail; if so, they can't move
         if (!IsInJail)
         {
+            Console.Clear();
             int steps = RollDice();
+            if (Position + steps > board.Size - 1 && Position + steps != 40) { board.Tiles[0].LandOn(this); } // check player is pass starting tile if so player get 200
             Position = (Position + steps) % board.Size;
 
             Console.WriteLine($"\n{Name} rolled a {steps} and moved to position {Position} on the board.");
 
-            CurrentTile = board.Tiles[7];
+            CurrentTile = board.Tiles[Position];
+            board.DisplayBoard(MonopolyProject.players);
             Console.WriteLine($"\n{Name} is here: \n" + CurrentTile.ToString());
+
             DisplayAssets();
             TryToBuyTile();
             CurrentTile.LandOn(this);
@@ -114,16 +118,24 @@ public class Player
             Console.WriteLine($"{Name} is in jail and cannot move.");
             Console.ResetColor();
             this.EndTurn();
+            Console.ReadLine();
         }
 
         Console.WriteLine($"{Name}'s turn is complete.\n----------------------------------------");
+        Console.WriteLine($"\n\n{Name}'s Final Total Money: {Money} TL");
+        Console.WriteLine($"Total Money on Board: {Board.Instance.cash} TL");
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine("Press 'Enter' to continue...");
+        Console.ResetColor();
+        Console.ReadLine();
+        Console.Clear();
     }
 
     // Display player's assets, including properties, utility cards, and train station cards
     public void DisplayAssets()
 
     {
-        Console.ForegroundColor = ConsoleColor.Blue;
+        Console.ForegroundColor = ConsoleColor.Cyan;
         Console.WriteLine($"\n\n{Name}'s Assets:");
         Console.WriteLine("------------------------------");
 
@@ -201,14 +213,6 @@ public class Player
         Console.WriteLine($"{Name} rolled a {LastDiceValue}.");
         return LastDiceValue;
     }
-
-
-    public void DrawCard()
-    {
-
-    }
-
-
     // Send the player to jail
     public void GoToJail(Board board)
     {

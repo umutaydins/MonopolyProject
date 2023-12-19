@@ -192,8 +192,17 @@ public class Property : Tile, IOwnable
         }
     }
 
-
-
+    public override void Display(string route,int position)
+    {
+        if (IsOwned())
+        {
+            Console.Write($"|{position}-{Name} Owner: {Owner.Name} Houses: {HouseCount} Hotels: {HotelCount}|" + route);
+        }
+        else
+        {
+            base.Display(route,position);
+        }
+    }
 
     public override string ToString()
     {
@@ -202,7 +211,7 @@ public class Property : Tile, IOwnable
 
 
         string result = base.ToString(); // Use the common part from the base class
-
+        
         result += $"\n{verticalLine,2} House Count: {HouseCount,9} |";
         result += $"\n{verticalLine,2} Hotel Count: {HouseCount,9} |";
 
@@ -213,6 +222,7 @@ public class Property : Tile, IOwnable
                   $"{verticalLine,2} Color: {Color,12}{verticalLine,5}\n" +
                   $"{verticalLine}{horizontalLine}{verticalLine,5}";
 
+        Console.ForegroundColor = Color.Equals("Brown") ? ConsoleColor.DarkRed : (Color.Equals("Blue") ? ConsoleColor.Blue : (Color.Equals("Pink") ? ConsoleColor.Magenta : (Color.Equals("Orange") ? ConsoleColor.DarkYellow : (Color.Equals("Red") ? ConsoleColor.Red : (Color.Equals("Yellow") ? ConsoleColor.Yellow : (Color.Equals("Green") ? ConsoleColor.Green : (Color.Equals("DarkBlue") ? ConsoleColor.DarkBlue : ConsoleColor.White)))))));
 
         return result;
     }
