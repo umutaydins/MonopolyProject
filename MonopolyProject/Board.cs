@@ -77,7 +77,7 @@ public class Board
     // (36) Chance card tile, no need to create again
     Tile tarabya = new Property(37, "Tarabya", "Property", 400, null, "DarkBlue");
     Tile luxuryTaxTile = new DefaultTiles(38, "Luxury Tax Tile", "Pay 150TL to board.");
-    Tile yenikoy = new Property(39, "Yenikoy", "Property", 64000, null, "DarkBlue");
+    Tile yenikoy = new Property(39, "Yenikoy", "Property", 400, null, "DarkBlue");
 
     public void InitializeBoard()
     {
