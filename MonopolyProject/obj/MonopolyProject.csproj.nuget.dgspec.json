@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\MONSTER\\Source\\Repos\\MonopolyProject\\MonopolyProject\\MonopolyProject.csproj": {}
+    "/Users/pelintunc/Desktop/MonopolyProject-1/MonopolyProject/MonopolyProject.csproj": {}
   },
   "projects": {
-    "C:\\Users\\MONSTER\\Source\\Repos\\MonopolyProject\\MonopolyProject\\MonopolyProject.csproj": {
+    "/Users/pelintunc/Desktop/MonopolyProject-1/MonopolyProject/MonopolyProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\MONSTER\\Source\\Repos\\MonopolyProject\\MonopolyProject\\MonopolyProject.csproj",
+        "projectUniqueName": "/Users/pelintunc/Desktop/MonopolyProject-1/MonopolyProject/MonopolyProject.csproj",
         "projectName": "MonopolyProject",
-        "projectPath": "C:\\Users\\MONSTER\\Source\\Repos\\MonopolyProject\\MonopolyProject\\MonopolyProject.csproj",
-        "packagesPath": "C:\\Users\\MONSTER\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\MONSTER\\Source\\Repos\\MonopolyProject\\MonopolyProject\\obj\\",
+        "projectPath": "/Users/pelintunc/Desktop/MonopolyProject-1/MonopolyProject/MonopolyProject.csproj",
+        "packagesPath": "/Users/pelintunc/.nuget/packages/",
+        "outputPath": "/Users/pelintunc/Desktop/MonopolyProject-1/MonopolyProject/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\MONSTER\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/pelintunc/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -55,7 +53,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.403/RuntimeIdentifierGraph.json"
         }
       }
     }

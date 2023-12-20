@@ -27,7 +27,7 @@ public class Player
     public Player(string name, Board board)
     {
         Name = name;
-        Money = 400;
+        Money = 200;
         Position = 0;
         IsInJail = false;
         TurnsInJail = 2;
