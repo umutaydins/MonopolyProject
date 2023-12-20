@@ -21,7 +21,7 @@ public class ChanceCardTile : Tile
         chanceCardActions.Add("Collect 150Ꝟ.");
         chanceCardActions.Add("Collect 50Ꝟ.");
         chanceCardActions.Add("Place 150Ꝟ on the board.");
-        chanceCardActions.Add("Place on the board 25 for each owned house, and 100Ꝟ for each owned hotel.");
+        chanceCardActions.Add("Place on the board 25Ꝟ for each owned house, and 100Ꝟ for each owned hotel.");
         chanceCardActions.Add("Travel to the nearest train station. Collect 200Ꝟ if youpass through the beginning tile.");
         chanceCardActions.Add("Go back 3 tiles.");
         chanceCardActions.Add("Get out of jail immediately, if in jail.");
@@ -72,7 +72,7 @@ public class ChanceCardTile : Tile
                 Console.WriteLine($"Board has: {Board.Instance.cash}TL");
                 break;
 
-            case "Place on the board 25 for each owned house, and 100Ꝟ for each owned hotel.":
+            case "Place on the board 25Ꝟ for each owned house, and 100Ꝟ for each owned hotel.":
 
                 if(player.HouseCount>0){
                     Console.WriteLine($"{player.Name} has {player.HouseCount} House{(player.HouseCount > 1 ? "'s": "")}");
@@ -121,7 +121,8 @@ public class ChanceCardTile : Tile
                 break;
 
             case "Get out of jail immediately, if in jail.":
-                player.GoToJail(Board.Instance);
+                player.TurnsInJail=0;
+                player.IsInJail=false;
                 break; 
 
 

@@ -30,7 +30,7 @@ public class Player
         Money = 200;
         Position = 0;
         IsInJail = false;
-        TurnsInJail = 2;
+        TurnsInJail = 0;
         HouseCount = 0;
         HotelCount = 0;
         this.board = board; // Store the reference to the Board
